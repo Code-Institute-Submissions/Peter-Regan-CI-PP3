@@ -17,12 +17,41 @@ SHEET = GSPREAD_CLIENT.open("UT2 Tracker Spreadsheet")
 
 print("Welcome to Unstoppable UT2, where you can keep track of your UT2 performance. In case you're unfamiliar with the term 'UT2', it refers to an aerobic workout at an intensity which can be held for the full workout duration. You should be comfortable enough to speak and be operating at 65-75% maximimum heart rate. The workout should last approximately 60 minutes.")
 
-def create_new_sheet():
+
+
+def type_username():
+    """
+    Here is where the user will enter
+    their username.
+    """
+    username = input("Create your new username here. If you've visited us"
+    "before, we will fetch your existing data!")
+    return username
+
+
+username = type_username()
+# type_username()
+
+
+def create_new_user_sheet():
     """
     Creates new spreadsheet in Google Sheets.
     """
-    sh = GSPREAD_CLIENT.create('A new spreadsheet')
+    type_username()
+    sh = GSPREAD_CLIENT.create(f"{username} UT2 Tracker Spreadsheet")
     sh.share('regan.peter.w@gmail.com', perm_type='user', role='writer')
 
+create_new_user_sheet()
 
-create_new_sheet()
+
+
+
+
+
+
+
+
+
+
+
+
