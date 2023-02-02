@@ -30,14 +30,16 @@ def type_username():
 
 
 username = type_username()
-# type_username()
+
+def check_if_user_exists():
+    
+
 
 
 def create_new_user_sheet():
     """
     Creates new spreadsheet in Google Sheets.
     """
-    type_username()
     sh = GSPREAD_CLIENT.create(f"{username} UT2 Tracker Spreadsheet")
     sh.share('regan.peter.w@gmail.com', perm_type='user', role='writer')
 
