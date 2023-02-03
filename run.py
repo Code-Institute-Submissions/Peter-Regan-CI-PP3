@@ -23,7 +23,6 @@ SHEET = GSPREAD_CLIENT.open("UT2 Tracker Spreadsheet")
 print("Welcome to Unstoppable UT2, where you can keep track of your UT2 performance. In case you're unfamiliar with the term 'UT2', it refers to an aerobic workout at an intensity which can be held for the full workout duration. You should be comfortable enough to speak and be operating at 65-75% maximimum heart rate. The workout should last approximately 60 minutes.")
 
 
-
 def type_username():
     """
     Here is where the user will enter
@@ -37,8 +36,6 @@ def type_username():
 username = type_username()
     
 
-
-
 def create_new_user_sheet():
     """
     Creates new spreadsheet in Google Sheets.
@@ -46,8 +43,8 @@ def create_new_user_sheet():
     sh = GSPREAD_CLIENT.create(f"{username} UT2 Tracker Spreadsheet")
     sh.share('regan.peter.w@gmail.com', perm_type='user', role='writer')
 
-create_new_user_sheet()
 
+create_new_user_sheet()
 
 
 def search_file():
@@ -58,6 +55,7 @@ def search_file():
     for guides on implementing OAuth2 for the application.
     """
     creds = CREDS
+    username = type_username()
 
     try:
         # create drive api client
@@ -66,9 +64,9 @@ def search_file():
         page_token = None
         while True:
             # pylint: disable=maybe-no-member
-            response = service.files().list(q="name contains 'UT2'",
+            response = service.files().list(q="name contains 'UT2 Spreadsheet Tracker'",
                                             spaces='drive',
-                                            fields='nextPageToken, '
+                                            fields='nextPageToken,'
                                                    'files(id, name)',
                                             pageToken=page_token).execute()
             for file in response.get('files', []):
@@ -89,6 +87,7 @@ def search_file():
 if __name__ == '__main__':
     search_file()
     
+
 
 
 
