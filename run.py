@@ -2,7 +2,7 @@ from __future__ import print_function
 import google.auth
 import gspread 
 import os
-from dotenv import load_env
+from dotenv import load_dotenv
 from google.oauth2.service_account import Credentials
 # The code on line 4 was taken from this url:
 # https://stackoverflow.com/questions/67551298/using-python-to-create-a-new-google-sheet
@@ -10,7 +10,7 @@ from gspread_dataframe import set_with_dataframe
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
-load_env()
+load_dotenv()
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
