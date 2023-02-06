@@ -73,11 +73,11 @@ def search_file():
             response = service.files().list(q=f"name='{username} UT2 Tracker Spreadsheet'",
                                             spaces='drive',
                                             fields='nextPageToken,'
-                                                   'files(id, name)',
+                                                   'files(name)',
                                             pageToken=page_token).execute()
             for file in response.get('files', []):
                 # Process change
-                print(F'Found file: {file.get("name")}, {file.get("id")}')
+                print(F'Found file: {file.get("name")}')
             files.extend(response.get('files', []))
             page_token = response.get('nextPageToken', None)
             if page_token is None:
