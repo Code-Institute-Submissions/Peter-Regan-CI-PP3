@@ -45,7 +45,7 @@ def create_new_user_sheet():
     Creates new spreadsheet in Google Sheets.
     """
     sh = GSPREAD_CLIENT.create(f"{username} UT2 Tracker Spreadsheet")
-    sh.share('regan.peter.w@gmail.com', perm_type='user', role='writer')
+    sh.share(email_address, perm_type='user', role='writer')
 
 
 create_new_user_sheet()
