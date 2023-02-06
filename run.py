@@ -62,7 +62,6 @@ def search_file():
     for guides on implementing OAuth2 for the application.
     """
     creds = CREDS
-    username = type_username()
 
     try:
         # create drive api client
@@ -71,7 +70,7 @@ def search_file():
         page_token = None
         while True:
             # pylint: disable=maybe-no-member
-            response = service.files().list(q="name contains 'UT2 Tracker Spreadsheet'",
+            response = service.files().list(q=f"name='{username} UT2 Tracker Spreadsheet'",
                                             spaces='drive',
                                             fields='nextPageToken,'
                                                    'files(id, name)',
@@ -90,10 +89,13 @@ def search_file():
 
     return files
 
-username_spreadsheet_list = search_file()
 
-# if __name__ == '__main__':
-#     search_file()
+
+
+
+
+if __name__ == '__main__':
+    search_file()
     
 
 
