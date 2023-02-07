@@ -56,6 +56,7 @@ def create_new_user_workbook():
         worksheet = user_workbook.add_worksheet(title=worksheet_name, rows=1000, cols=3)
         worksheets.append(worksheet)
     user_workbook.del_worksheet(user_workbook.sheet1)
+    # Add cell formatting rule to be applied to all worksheets.
     cell_format = {
         "textFormat": {
             "bold": True
@@ -65,7 +66,8 @@ def create_new_user_workbook():
     for cell in cells_to_format:
         for worksheet in worksheets:
             worksheet.format(cell, cell_format)
-
+    # Created nested for loops to iterate cell headings
+    # across all user's three worksheets.
     all_worksheet_types = user_workbook.worksheets()
     worksheet_headings = ["Date", "Duration", "Distance"]
     for i, worksheet in enumerate(all_worksheet_types):
