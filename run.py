@@ -33,38 +33,47 @@ def type_username():
     their username.
     """
     username = input("Create your new username here. If you've visited us"
-    "before, we will fetch your existing data!")
+    " before, we will fetch your existing data!\n")
     return username
 
 
 username = type_username()
 
     
-def create_new_user_sheet():
+def create_new_user_workbook():
     """
     Creates new spreadsheet in Google Sheets.
     """
     
-    sh = GSPREAD_CLIENT.create(f"{username} UT2 Tracker Spreadsheet")
-    cell_format = {
-        "textFormat": {
-            "bold": True
-        }
-    }
-    cells_to_format = ['A1', 'B1', 'C1']
-    run_worksheet = sh.add_worksheet("Treadmill", rows=1000, cols=3)
-    for cell in cells_to_format:
-        run_worksheet.format(cell, cell_format)
-    run_worksheet.update_cell(1, 1, "Date")
-    run_worksheet.update_cell(1, 2, "Duration")
-    run_worksheet.update_cell(1, 3, "Distance")
+    workbook = GSPREAD_CLIENT.create(f"{username} UT2 Tracker Spreadsheet")
+    worksheet_names = ["Treadmill", "Rowing Ergometer", "Exercise Bike"]
+    for worksheet in worksheet_names:
+        workbook.add_worksheet(title=worksheet, rows=1000, cols=3)
+    
+    
+    
+    
+    
+    
+    # cell_format = {
+    #     "textFormat": {
+    #         "bold": True
+    #     }
+    # }
+    # cells_to_format = ['A1', 'B1', 'C1']
+    # run_worksheet = sh.add_worksheet("Treadmill", rows=1000, cols=3)
+    # for cell in cells_to_format:
+    #     run_worksheet.format(cell, cell_format)
+    # run_worksheet.update_cell(1, 1, "Date")
+    # run_worksheet.update_cell(1, 2, "Duration")
+    # run_worksheet.update_cell(1, 3, "Distance")
     if email_address:
-        sh.share(email_address, perm_type='user', role='writer')
+        workbook.share(email_address, perm_type='user', role='writer')
     else:
         print("Email address not found in the environment variables.")
 
 
-create_new_user_sheet()
+create_new_user_workbook()
 
 
 def search_file():
