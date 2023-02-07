@@ -44,11 +44,17 @@ def create_new_user_workbook():
     """
     Creates new spreadsheet in Google Sheets.
     """
-    
+    # Create new workbook with three worksheets.
+    # Workbook will include user's typed username.
+    # Three worksheets have titles listed below.
+    # Default "Sheet1" worksheet gets deleted.
+    # Worksheet list object created to be referred to later when formatting.
     user_workbook = GSPREAD_CLIENT.create(f"{username} UT2 Tracker Spreadsheet")
     worksheet_names = ["Treadmill", "Rowing Ergometer", "Exercise Bike"]
-    for worksheet in worksheet_names:
-        user_workbook.add_worksheet(title=worksheet, rows=1000, cols=3)
+    worksheets = []
+    for worksheet_name in worksheet_names:
+        worksheet = user_workbook.add_worksheet(title=worksheet_name, rows=1000, cols=3)
+        worksheets.append(worksheet)
     user_workbook.del_worksheet(user_workbook.sheet1)
     cell_format = {
         "textFormat": {
