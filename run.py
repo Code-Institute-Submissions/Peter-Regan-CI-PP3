@@ -63,7 +63,7 @@ def create_new_user_workbook():
     }
     cells_to_format = ['A1', 'B1', 'C1']
     for cell in cells_to_format:
-        for worksheet in worksheet_names:
+        for worksheet in worksheets:
             worksheet.format(cell, cell_format)
 
     all_worksheet_types = user_workbook.worksheets()
