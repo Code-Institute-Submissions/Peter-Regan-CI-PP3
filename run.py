@@ -46,6 +46,18 @@ def create_new_user_sheet():
     """
     
     sh = GSPREAD_CLIENT.create(f"{username} UT2 Tracker Spreadsheet")
+    cell_format = {
+        "textFormat": {
+            "bold": True
+        }
+    }
+    cells_to_format = ['A1', 'B1', 'C1']
+    run_worksheet = sh.add_worksheet("Treadmill", rows=1000, cols=3)
+    for cell in cells_to_format:
+        run_worksheet.format(cell, cell_format)
+    run_worksheet.update_cell(1, 1, "Date")
+    run_worksheet.update_cell(1, 2, "Duration")
+    run_worksheet.update_cell(1, 3, "Distance")
     if email_address:
         sh.share(email_address, perm_type='user', role='writer')
     else:
@@ -53,6 +65,7 @@ def create_new_user_sheet():
 
 
 create_new_user_sheet()
+
 
 def search_file():
     """Search file in drive location
