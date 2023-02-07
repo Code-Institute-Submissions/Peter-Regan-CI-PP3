@@ -46,10 +46,10 @@ def create_new_user_workbook():
     """
     
     workbook = GSPREAD_CLIENT.create(f"{username} UT2 Tracker Spreadsheet")
-    workbook.del_worksheet("Sheet1")
     worksheet_names = ["Treadmill", "Rowing Ergometer", "Exercise Bike"]
     for worksheet in worksheet_names:
         workbook.add_worksheet(title=worksheet, rows=1000, cols=3)
+    workbook.del_worksheet(workbook.sheet1)
     
     
     
