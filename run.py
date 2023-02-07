@@ -45,31 +45,28 @@ def create_new_user_workbook():
     Creates new spreadsheet in Google Sheets.
     """
     
-    workbook = GSPREAD_CLIENT.create(f"{username} UT2 Tracker Spreadsheet")
+    user_workbook = GSPREAD_CLIENT.create(f"{username} UT2 Tracker Spreadsheet")
     worksheet_names = ["Treadmill", "Rowing Ergometer", "Exercise Bike"]
     for worksheet in worksheet_names:
-        workbook.add_worksheet(title=worksheet, rows=1000, cols=3)
-    workbook.del_worksheet(workbook.sheet1)
-    
-    
-    
-    
-    
-    
-    # cell_format = {
-    #     "textFormat": {
-    #         "bold": True
-    #     }
-    # }
-    # cells_to_format = ['A1', 'B1', 'C1']
-    # run_worksheet = sh.add_worksheet("Treadmill", rows=1000, cols=3)
-    # for cell in cells_to_format:
-    #     run_worksheet.format(cell, cell_format)
-    # run_worksheet.update_cell(1, 1, "Date")
-    # run_worksheet.update_cell(1, 2, "Duration")
-    # run_worksheet.update_cell(1, 3, "Distance")
+        user_workbook.add_worksheet(title=worksheet, rows=1000, cols=3)
+    user_workbook.del_worksheet(user_workbook.sheet1)
+    cell_format = {
+        "textFormat": {
+            "bold": True
+        }
+    }
+    cells_to_format = ['A1', 'B1', 'C1']
+    for cell in cells_to_format:
+        for worksheet in worksheet_names:
+            worksheet.format(cell, cell_format)
+
+    all_worksheet_types = user_workbook.worksheets()
+    worksheet_headings = ["Date", "Duration", "Distance"]
+    for i, worksheet in enumerate(all_worksheet_types):
+        for j in range (3):
+            worksheet.update_cell(1, j+1, worksheet_headings[j])
     if email_address:
-        workbook.share(email_address, perm_type='user', role='writer')
+        user_workbook.share(email_address, perm_type='user', role='writer')
     else:
         print("Email address not found in the environment variables.")
 
