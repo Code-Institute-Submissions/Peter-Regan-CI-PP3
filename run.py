@@ -24,7 +24,7 @@ GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open("UT2 Tracker Spreadsheet")
 email_address = os.getenv("EMAIL_ADDRESS")
 
-print("Welcome to Unstoppable UT2, where you can keep track of your UT2 performance. In case you're unfamiliar with the term 'UT2', it refers to an aerobic workout at an intensity which can be held for the full workout duration. You should be comfortable enough to speak and be operating at 65-75% maximimum heart rate. The workout should last approximately 60 minutes.")
+
 
 
 def type_username():
@@ -37,7 +37,7 @@ def type_username():
     return username
 
 
-username = type_username()
+
 
     
 def create_new_user_workbook():
@@ -67,7 +67,7 @@ def create_new_user_workbook():
         for worksheet in worksheets:
             worksheet.format(cell, cell_format)
     # Created nested for loops to iterate cell headings
-    # across all user's three worksheets.
+    # across all three of user's worksheets.
     all_worksheet_types = user_workbook.worksheets()
     worksheet_headings = ["Date", "Duration", "Distance"]
     for i, worksheet in enumerate(all_worksheet_types):
@@ -79,7 +79,7 @@ def create_new_user_workbook():
         print("Email address not found in the environment variables.")
 
 
-create_new_user_workbook()
+
 
 
 def search_file():
@@ -108,8 +108,11 @@ def search_file():
                 print(F'Found file: {file.get("name")}')
             files.extend(response.get('files', []))
             page_token = response.get('nextPageToken', None)
+            if not files:
+                create_new_user_workbook()
             if page_token is None:
                 break
+            
 
     except HttpError as error:
         print(F'An error occurred: {error}')
@@ -123,7 +126,10 @@ def search_file():
 
 
 if __name__ == '__main__':
+    print("Welcome to Unstoppable UT2, where you can keep track of your UT2 performance. In case you're unfamiliar with the term 'UT2', it refers to an aerobic workout at an intensity which can be held for the full workout duration. You should be comfortable enough to speak and be operating at 65-75% maximimum heart rate. The workout should last approximately 60 minutes.")
+    username = type_username()
     search_file()
+    # create_new_user_workbook()
     
 
 
