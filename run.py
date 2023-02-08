@@ -125,6 +125,13 @@ def user_workout_choice():
     while workout_choice not in ['1', '2', '3']:
         workout_choice = input("Type 1, 2 or 3 to choose one of the above.")
     workout_choice = int(workout_choice)
+    if workout_choice == 1:
+        call data writing function to treadmill worksheet
+    elif workout_choice == 2:
+        call data writing function to rowing worksheet
+    elif workout_choice == 3:
+        call data writing function to bike worksheet
+
     
 
 
