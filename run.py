@@ -25,8 +25,6 @@ SHEET = GSPREAD_CLIENT.open("UT2 Tracker Spreadsheet")
 email_address = os.getenv("EMAIL_ADDRESS")
 
 
-
-
 def type_username():
     """
     Here is where the user will enter
@@ -37,9 +35,6 @@ def type_username():
     return username
 
 
-
-
-    
 def create_new_user_workbook():
     """
     Creates new spreadsheet in Google Sheets.
@@ -79,9 +74,6 @@ def create_new_user_workbook():
         print("Email address not found in the environment variables.")
 
 
-
-
-
 def search_file():
     """Search file in drive location
 
@@ -105,10 +97,11 @@ def search_file():
                                             pageToken=page_token).execute()
             for file in response.get('files', []):
                 # Process change
-                print(F'Found file: {file.get("name")}')
+                print(f"Welcome back {username}!\nWhat would you like to do today?")
             files.extend(response.get('files', []))
             page_token = response.get('nextPageToken', None)
             if not files:
+                print(f"Thanks for signing up {username}!\nWhat would you like to do today?")
                 create_new_user_workbook()
             if page_token is None:
                 break
@@ -121,22 +114,22 @@ def search_file():
     return files
 
 
-
-
-
-
-if __name__ == '__main__':
-    print("Welcome to Unstoppable UT2, where you can keep track of your UT2 performance. In case you're unfamiliar with the term 'UT2', it refers to an aerobic workout at an intensity which can be held for the full workout duration. You should be comfortable enough to speak and be operating at 65-75% maximimum heart rate. The workout should last approximately 60 minutes.")
-    username = type_username()
-    search_file()
-    # create_new_user_workbook()
+def user_workout_choice():
+    """
+    This will allow user to select which workout they want to log
+    and write their data to the appropriate worksheet.
+    """
+    print(f"Thanks for signing up {username}!\nWhat kind of workout would you like to log today?")
+    print("1. Treadmill\n2. Rowing Ergometer\n3. Exercise Bike")
+    workout_choice = None
+    while workout_choice not in ['1', '2', '3']:
+        workout_choice = input("Type 1, 2 or 3 to choose one of the above.")
+    workout_choice = int(workout_choice)
     
 
 
-
-
-
-
-
-
-
+if __name__ == '__main__':
+    # print("Welcome to Unstoppable UT2, where you can keep track of your UT2 performance. In case you're unfamiliar with the term 'UT2', it refers to an aerobic workout at an intensity which can be held for the full workout duration. You should be comfortable enough to speak and be operating at 65-75% maximimum heart rate. The workout should last approximately 60 minutes.")
+    username = type_username()
+    # search_file()
+    new_user_first_user_choice()
