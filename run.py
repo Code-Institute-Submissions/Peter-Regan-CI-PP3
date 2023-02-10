@@ -3,6 +3,7 @@ import google.auth
 import gspread 
 import os
 import re
+import datetime
 from dotenv import load_dotenv
 from google.oauth2.service_account import Credentials
 # The code on line 4 was taken from this url:
@@ -189,6 +190,32 @@ def input_workout_duration_info():
             print("Thank you! Your UT2 Tracker data is being updated.")
             break
         return time_data
+
+
+def input_workout_distance_info():
+    """
+    Here the user will input their
+    data for the distance covered in their workout.
+    """
+    while True:
+        print(f"Input your distance covered in kilometres below.\n")
+        print(f"Your distance should be entered in this format - 00.00\n")
+        print(f"E.g. if you cycled 23.4km on the exercise bike, you would enter 23.40\n")
+        distance_data = input("Please input your workout distance here: ")
+        if validate_user_workout_distance_input(distance_data):
+            print("Thank you! Your UT2 Tracker data is being updated.")
+            break
+        return distance_data
+
+
+def update_worksheet(time_data, distance_data, worksheet):
+    worksheet_to_update = SHEET.worksheet(worksheet)
+    current_date = datetime.datetime.now()
+    date_string = now.strftime("%Y-%m-%d %H:%M:%S")
+    row_to_append = [date_string] + time_data + distance_data
+    worksheet_to_update.append_row(row_to_append)
+    print(f"{worksheet} worksheet updated successfully.")
+
 
 
 
