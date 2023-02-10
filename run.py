@@ -2,6 +2,7 @@ from __future__ import print_function
 import google.auth
 import gspread 
 import os
+import re
 from dotenv import load_dotenv
 from google.oauth2.service_account import Credentials
 # The code on line 4 was taken from this url:
@@ -119,7 +120,7 @@ def user_workout_choice():
     This will allow user to select which workout they want to log
     and write their data to the appropriate worksheet.
     """
-    print(f"Thanks for signing up {username}!\nWhat kind of workout would you like to log today?")
+    print(f"What kind of workout would you like to log today?")
     print("1. Treadmill\n2. Rowing Ergometer\n3. Exercise Bike")
     workout_choice = None
     while workout_choice not in ['1', '2', '3']:
@@ -131,6 +132,22 @@ def user_workout_choice():
         call data writing function to rowing worksheet
     elif workout_choice == 3:
         call data writing function to bike worksheet
+
+
+def validate_user_workout_input(data):
+    """
+    This will ensure that the user may only
+    input data in this format - 00:00:00 -
+    where the first two digits correspond to hours,
+    the second two digits correspond to minutes
+    and the last two digist correspond to seconds.
+    """
+    format = re.compile(r'\d\d:\d\d:\d\d')
+    match = format.fullmatch(data)
+    return match is not None
+
+def 
+
 
     
 
