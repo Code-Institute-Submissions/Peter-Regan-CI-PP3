@@ -155,6 +155,26 @@ def validate_user_workout_duration_input(time_data):
             time_data = input("Please input your workout duration here: ")
 
 
+def validate_user_workout_distance_input(distance_data):
+    """
+    This will ensure that the user may only
+    input data in this format - 00.00 -
+    the digits correspond to kilometers measured
+    to two decimal places.
+    """
+    format = re.compile(r'\d\d.\d\d')
+    while True:
+        match = format.fullmatch(distance_data)
+        if match is not None:
+            return True
+        else:
+            print(f"Your distance has not been entered in the correct format.\n")
+            print(f"Your distance should be entered in this format - 00.00\n")
+            print(f"E.g. if you cycled 23.4km on the exercise bike, you would enter 23.40\n")
+            print(f"Please try again.")
+            time_data = input("Please input your workout distance here: ")
+
+
     
 
 
