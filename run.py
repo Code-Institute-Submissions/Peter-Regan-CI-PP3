@@ -134,7 +134,7 @@ def user_workout_choice():
         call data writing function to bike worksheet
 
 
-def validate_user_workout_input(data):
+def validate_user_workout_duration_input(time_data):
     """
     This will ensure that the user may only
     input data in this format - 00:00:00 -
@@ -143,10 +143,16 @@ def validate_user_workout_input(data):
     and the last two digist correspond to seconds.
     """
     format = re.compile(r'\d\d:\d\d:\d\d')
-    match = format.fullmatch(data)
-    return match is not None
-
-def 
+    while True:
+        match = format.fullmatch(time_data)
+        if match is not None:
+            return True
+        else:
+            print(f"Your time has not been entered in the correct format.\n")
+            print(f"Your time should be entered in this format - 00:00:00\n")
+            print(f"E.g. if your workout was an hour and twenty minutes long, you would enter 01:20:00.\n")
+            print(f"Please try again.")
+            time_data = input("Please input your workout duration here: ")
 
 
     
