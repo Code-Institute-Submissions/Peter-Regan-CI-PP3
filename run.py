@@ -36,6 +36,7 @@ def type_username():
     " before, we will fetch your existing data!\n")
     return username
 
+username = type_username()
 
 def create_new_user_workbook():
     """
@@ -108,7 +109,6 @@ def search_file():
             if page_token is None:
                 break
             
-
     except HttpError as error:
         print(F'An error occurred: {error}')
         files = None
@@ -121,18 +121,40 @@ def user_workout_choice():
     This will allow user to select which workout they want to log
     and write their data to the appropriate worksheet.
     """
-    print(f"What kind of workout would you like to log today?")
+    print("What kind of workout would you like to log today?")
     print("1. Treadmill\n2. Rowing Ergometer\n3. Exercise Bike")
+
     workout_choice = None
+    time_data = input_workout_duration_info()
+    distance_data = input_workout_distance_info()
+
     while workout_choice not in ['1', '2', '3']:
         workout_choice = input("Type 1, 2 or 3 to choose one of the above.")
     workout_choice = int(workout_choice)
+
     if workout_choice == 1:
-        call data writing function to treadmill worksheet
+        print("You've chosen to update your treadmill data.")
+        input_workout_duration_info()
+        validate_user_workout_duration_input(time_data)
+        input_workout_distance_info()
+        validate_user_workout_distance_input(distance_data)
+        update_worksheet(time_data, distance_data, "Treadmill")
+
     elif workout_choice == 2:
-        call data writing function to rowing worksheet
+        print("You've chosen to update your rowing ergometer data.")
+        input_workout_duration_info()
+        validate_user_workout_duration_input(time_data)
+        input_workout_distance_info()
+        validate_user_workout_distance_input(distance_data)
+        update_worksheet(time_data, distance_data, "Rowing Ergometer")
+
     elif workout_choice == 3:
-        call data writing function to bike worksheet
+        print("You've chosen to update your exercise bike data.")
+        input_workout_duration_info()
+        validate_user_workout_duration_input(time_data)
+        input_workout_distance_info()
+        validate_user_workout_distance_input(distance_data)
+        update_worksheet(time_data, distance_data, "Exercise Bike")
 
 
 def validate_user_workout_duration_input(time_data):
@@ -143,16 +165,17 @@ def validate_user_workout_duration_input(time_data):
     the second two digits correspond to minutes
     and the last two digist correspond to seconds.
     """
-    format = re.compile(r'\d\d:\d\d:\d\d')
+    time_format = re.compile(r'\d\d:\d\d:\d\d')
     while True:
-        match = format.fullmatch(time_data)
+        match = time_format.fullmatch(time_data)
         if match is not None:
             return True
         else:
-            print(f"Your time has not been entered in the correct format.\n")
-            print(f"Your time should be entered in this format - 00:00:00\n")
-            print(f"E.g. if your workout was an hour and twenty minutes long, you would enter 01:20:00.\n")
-            print(f"Please try again.")
+            print("Your time has not been entered in the correct format.\n")
+            print("Your time should be entered in this format - 00:00:00\n")
+            print("E.g. if your workout was an hour and twenty minutes long, ")
+            print("you would enter 01:20:00.\n")
+            print("Please try again.")
             time_data = input("Please input your workout duration here: ")
 
 
@@ -163,16 +186,17 @@ def validate_user_workout_distance_input(distance_data):
     the digits correspond to kilometers measured
     to two decimal places.
     """
-    format = re.compile(r'\d\d.\d\d')
+    distance_format = re.compile(r'\d\d.\d\d')
     while True:
-        match = format.fullmatch(distance_data)
+        match = distance_format.fullmatch(distance_data)
         if match is not None:
             return True
         else:
-            print(f"Your distance has not been entered in the correct format.\n")
-            print(f"Your distance should be entered in this format - 00.00\n")
-            print(f"E.g. if you cycled 23.4km on the exercise bike, you would enter 23.40\n")
-            print(f"Please try again.")
+            print("Your distance has not been entered in the correct format.\n")
+            print("Your distance should be entered in this format - 00.00\n")
+            print("E.g. if you cycled 23.4km on the exercise bike, ")
+            print("you would enter 23.40\n")
+            print("Please try again.")
             time_data = input("Please input your workout distance here: ")
 
 
@@ -182,9 +206,10 @@ def input_workout_duration_info():
     data for their workout duration.
     """
     while True:
-        print(f"Input your workout duration below\n")
-        print(f"Your time should be entered in this format - 00:00:00\n")
-        print(f"E.g. if your workout was an hour and twenty minutes long, you would enter 01:20:00.\n")
+        print("Input your workout duration below\n")
+        print("Your time should be entered in this format - 00:00:00\n")
+        print("E.g. if your workout was an hour and twenty minutes long, ")
+        print("you would enter 01:20:00.\n")
         time_data = input("Please input your workout duration here: ")
         if validate_user_workout_duration_input(time_data):
             print("Thank you! Your UT2 Tracker data is being updated.")
@@ -198,9 +223,10 @@ def input_workout_distance_info():
     data for the distance covered in their workout.
     """
     while True:
-        print(f"Input your distance covered in kilometres below.\n")
-        print(f"Your distance should be entered in this format - 00.00\n")
-        print(f"E.g. if you cycled 23.4km on the exercise bike, you would enter 23.40\n")
+        print("Input your distance covered in kilometres below.\n")
+        print("Your distance should be entered in this format - 00.00\n")
+        print("E.g. if you cycled 23.4km on the exercise bike, ")
+        print("you would enter 23.40\n")
         distance_data = input("Please input your workout distance here: ")
         if validate_user_workout_distance_input(distance_data):
             print("Thank you! Your UT2 Tracker data is being updated.")
@@ -209,21 +235,22 @@ def input_workout_distance_info():
 
 
 def update_worksheet(time_data, distance_data, worksheet):
+    """
+    This function will add the user's workout distance
+    and duration data and append it to a row in their
+    spreadsheet along with the date of data entry.
+    """
     worksheet_to_update = SHEET.worksheet(worksheet)
     current_date = datetime.datetime.now()
-    date_string = now.strftime("%Y-%m-%d %H:%M:%S")
+    date_string = current_date.strftime("%Y-%m-%d %H:%M:%S")
     row_to_append = [date_string] + time_data + distance_data
     worksheet_to_update.append_row(row_to_append)
     print(f"{worksheet} worksheet updated successfully.")
 
-
-
-
-    
-
-
-if __name__ == '__main__':
-    # print("Welcome to Unstoppable UT2, where you can keep track of your UT2 performance. In case you're unfamiliar with the term 'UT2', it refers to an aerobic workout at an intensity which can be held for the full workout duration. You should be comfortable enough to speak and be operating at 65-75% maximimum heart rate. The workout should last approximately 60 minutes.")
+def main():
+    print("Welcome to Unstoppable UT2, where you can keep track of your UT2 performance. In case you're unfamiliar with the term 'UT2', it refers to an aerobic workout at an intensity which can be held for the full workout duration. You should be comfortable enough to speak and be operating at 65-75% maximimum heart rate. The workout should last approximately 60 minutes.")
     username = type_username()
-    # search_file()
-    new_user_first_user_choice()
+    search_file()
+    user_workout_choice()
+
+main()
