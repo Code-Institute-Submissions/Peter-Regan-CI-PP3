@@ -175,6 +175,23 @@ def validate_user_workout_distance_input(distance_data):
             time_data = input("Please input your workout distance here: ")
 
 
+def input_workout_duration_info():
+    """
+    Here the user will input their
+    data for their workout duration.
+    """
+    while True:
+        print(f"Input your workout duration below\n")
+        print(f"Your time should be entered in this format - 00:00:00\n")
+        print(f"E.g. if your workout was an hour and twenty minutes long, you would enter 01:20:00.\n")
+        time_data = input("Please input your workout duration here: ")
+        if validate_user_workout_duration_input(time_data):
+            print("Thank you! Your UT2 Tracker data is being updated.")
+            break
+        return time_data
+
+
+
     
 
 
