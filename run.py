@@ -132,6 +132,7 @@ def user_workout_choice():
     if workout_choice == 1:
         print("You've chosen to update your treadmill data.")
         time_data = input_workout_duration_info()
+        validate_user_workout_duration_input()
         distance_data = input_workout_distance_info()  
         update_worksheet(time_data, distance_data, "Treadmill")
 
@@ -165,7 +166,7 @@ def user_workout_choice():
 #         time_data = input("Please input your workout duration here: ")
 #         match = time_format.fullmatch(time_data)
 #         if match is not None:
-#             return True
+#             return time_data
 #         else:
 #             print("Your time has not been entered in the correct format.\n")
 #             print("Your time should be entered in this format - 00:00:00\n")
