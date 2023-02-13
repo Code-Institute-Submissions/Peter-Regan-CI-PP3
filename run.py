@@ -132,9 +132,9 @@ def user_workout_choice():
     if workout_choice == 1:
         print("You've chosen to update your treadmill data.")
         time_data = input_workout_duration_info()
-        validate_user_workout_duration_input()
-        distance_data = input_workout_distance_info()  
-        update_worksheet(time_data, distance_data, "Treadmill")
+        validate_user_workout_duration_input(time_data)
+        # distance_data = input_workout_distance_info()  
+        # update_worksheet(time_data, distance_data, "Treadmill")
 
     # elif workout_choice == 2:
     #     print("You've chosen to update your rowing ergometer data.")
@@ -173,6 +173,28 @@ def user_workout_choice():
 #             print("E.g. if your workout was an hour and twenty minutes long, ")
 #             print("you would enter 01:20:00.\n")
 #             print("Please try again.")
+
+def validate_user_workout_duration_input(time_data):
+    """
+    Inside the try, converts all string values to integeres.
+    Raises ValueError if strings cannot be converted into int,
+    or if there aren't exactly 6 values.
+    """
+    time_format = re.compile(r'\d\d:\d\d:\d\d')
+    while True:
+        try:
+            time_data_str = str(time_data)
+            match = time_format.fullmatch(time_data_str)
+            if match is None:
+                raise ValueError(
+                    f"Your workout time must be entered in this format - 00:00:00. You entered {time_data}"
+                    )
+            break
+        except ValueError as e:
+            print(f"Invalid data: {e}, please try again.\n")
+            time_data = input("Enter your workout time in this format - 00:00:00: ")
+    
+    return True
 
 
 # def validate_user_workout_distance_input():
@@ -230,19 +252,19 @@ def input_workout_distance_info():
     return distance_data
 
 
-def update_worksheet(time_data, distance_data, worksheet):
-    """
-    This function will add the user's workout distance
-    and duration data and append it to a row in their
-    spreadsheet along with the date of data entry.
-    """
-    username_sheet = GSPREAD_CLIENT.open(f'{username} UT2 Tracker Spreadsheet')
-    worksheet_to_update = username_sheet.worksheet(worksheet)
-    current_date = datetime.datetime.now()
-    date_string = current_date.strftime("%d-%m-%Y")
-    row_to_append = [date_string, time_data, distance_data]
-    worksheet_to_update.append_row(row_to_append)
-    print(f"{worksheet} worksheet updated successfully.")
+# def update_worksheet(time_data, distance_data, worksheet):
+#     """
+#     This function will add the user's workout distance
+#     and duration data and append it to a row in their
+#     spreadsheet along with the date of data entry.
+#     """
+#     username_sheet = GSPREAD_CLIENT.open(f'{username} UT2 Tracker Spreadsheet')
+#     worksheet_to_update = username_sheet.worksheet(worksheet)
+#     current_date = datetime.datetime.now()
+#     date_string = current_date.strftime("%d-%m-%Y")
+#     row_to_append = [date_string, time_data, distance_data]
+#     worksheet_to_update.append_row(row_to_append)
+#     print(f"{worksheet} worksheet updated successfully.")
 
 
 def main():
@@ -250,7 +272,7 @@ def main():
     Run all programme functions
     """
     print("Welcome to Unstoppable UT2, where you can keep track of your UT2 performance. In case you're unfamiliar with the term 'UT2', it refers to an aerobic workout at an intensity which can be held for the full workout duration. You should be comfortable enough to speak and be operating at 65-75% maximimum heart rate. The workout should last approximately 60 minutes.")
-    search_file()
+    # search_file()
     user_workout_choice()
 
 
