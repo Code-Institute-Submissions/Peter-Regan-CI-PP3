@@ -238,7 +238,7 @@ def update_worksheet(time_data, distance_data, worksheet):
     username_sheet = GSPREAD_CLIENT.open(f'{username} UT2 Tracker Spreadsheet')
     worksheet_to_update = username_sheet.worksheet(worksheet)
     current_date = datetime.datetime.now()
-    date_string = current_date.strftime("%Y-%m-%d %H:%M:%S")
+    date_string = current_date.strftime("%d-%m-%Y")
     row_to_append = [date_string, time_data, distance_data]
     worksheet_to_update.append_row(row_to_append)
     print(f"{worksheet} worksheet updated successfully.")
