@@ -133,23 +133,24 @@ def user_workout_choice():
         print("You've chosen to update your treadmill data.")
         time_data = input_workout_duration_info()
         validate_user_workout_duration_input(time_data)
-        # distance_data = input_workout_distance_info()  
+        distance_data = input_workout_distance_info()
+        validate_user_workout_distance_input(distance_data)  
         # update_worksheet(time_data, distance_data, "Treadmill")
 
-    # elif workout_choice == 2:
-    #     print("You've chosen to update your rowing ergometer data.")
-    #     time_data = input_workout_duration_info()
-    #     validate_user_workout_duration_input()
-    #     distance_data = input_workout_distance_info()
-    #     validate_user_workout_distance_input()
-    #     update_worksheet(time_data, distance_data, "Rowing Ergometer")
+    elif workout_choice == 2:
+        print("You've chosen to update your rowing ergometer data.")
+        time_data = input_workout_duration_info()
+        validate_user_workout_duration_input(time_data)
+        distance_data = input_workout_distance_info()
+        validate_user_workout_distance_input(distance_data)
+        # update_worksheet(time_data, distance_data, "Rowing Ergometer")
 
-    # elif workout_choice == 3:
-    #     print("You've chosen to update your exercise bike data.")
-    #     time_data = input_workout_duration_info()
-    #     validate_user_workout_duration_input()
-    #     distance_data = input_workout_distance_info()
-    #     validate_user_workout_distance_input()
+    elif workout_choice == 3:
+        print("You've chosen to update your exercise bike data.")
+        time_data = input_workout_duration_info()
+        validate_user_workout_duration_input(time_data)
+        distance_data = input_workout_distance_info()
+        validate_user_workout_distance_input(distance_data)
     #     update_worksheet(time_data, distance_data, "Exercise Bike")
 
 
@@ -196,6 +197,27 @@ def validate_user_workout_duration_input(time_data):
     
     return True
 
+def validate_user_workout_distance_input(distance_data):
+    """
+    Inside the try, converts all string values to integeres.
+    Raises ValueError if strings cannot be converted into int,
+    or if there aren't exactly 6 values.
+    """
+    distance_format = re.compile(r'\d\d.\d\d')
+    while True:
+        try:
+            distance_data_str = str(distance_data)
+            match = distance_format.fullmatch(distance_data_str)
+            if match is None:
+                raise ValueError(
+                    f"Your distance should be entered in this format - 00.00. You entered {distance_data}"
+                    )
+            break
+        except ValueError as e:
+            print(f"Invalid data: {e}, please try again.\n")
+            distance_data = input("Input your distance covered in kilometres in this format - 00.00 ")
+    
+    return True
 
 # def validate_user_workout_distance_input():
 #     """
