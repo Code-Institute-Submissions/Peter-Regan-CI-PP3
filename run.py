@@ -23,7 +23,7 @@ SCOPE = [
 CREDS = Credentials.from_service_account_file("creds.json")
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
-SHEET = GSPREAD_CLIENT.open("UT2 Tracker Spreadsheet")
+SHEET = GSPREAD_CLIENT.open('UT2 Tracker Spreadsheet')
 email_address = os.getenv("EMAIL_ADDRESS")
 
 
@@ -235,7 +235,8 @@ def update_worksheet(time_data, distance_data, worksheet):
     and duration data and append it to a row in their
     spreadsheet along with the date of data entry.
     """
-    worksheet_to_update = SHEET.worksheet(worksheet)
+    username_sheet = GSPREAD_CLIENT.open(f'{username} UT2 Tracker Spreadsheet')
+    worksheet_to_update = username_sheet.worksheet(worksheet)
     current_date = datetime.datetime.now()
     date_string = current_date.strftime("%Y-%m-%d %H:%M:%S")
     row_to_append = [date_string, time_data, distance_data]
