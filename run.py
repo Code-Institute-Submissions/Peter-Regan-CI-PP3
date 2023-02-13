@@ -125,8 +125,6 @@ def user_workout_choice():
     print("1. Treadmill\n2. Rowing Ergometer\n3. Exercise Bike")
 
     workout_choice = None
-    time_data = input_workout_duration_info()
-    distance_data = input_workout_distance_info()
 
     while workout_choice not in ['1', '2', '3']:
         workout_choice = input("Type 1, 2 or 3 to choose one of the above.")
@@ -134,25 +132,25 @@ def user_workout_choice():
 
     if workout_choice == 1:
         print("You've chosen to update your treadmill data.")
-        input_workout_duration_info()
+        time_data = input_workout_duration_info()
         validate_user_workout_duration_input(time_data)
-        input_workout_distance_info()
+        distance_data = input_workout_distance_info()
         validate_user_workout_distance_input(distance_data)
         update_worksheet(time_data, distance_data, "Treadmill")
 
     elif workout_choice == 2:
         print("You've chosen to update your rowing ergometer data.")
-        input_workout_duration_info()
+        time_data = input_workout_duration_info()
         validate_user_workout_duration_input(time_data)
-        input_workout_distance_info()
+        distance_data = input_workout_distance_info()
         validate_user_workout_distance_input(distance_data)
         update_worksheet(time_data, distance_data, "Rowing Ergometer")
 
     elif workout_choice == 3:
         print("You've chosen to update your exercise bike data.")
-        input_workout_duration_info()
+        time_data = input_workout_duration_info()
         validate_user_workout_duration_input(time_data)
-        input_workout_distance_info()
+        distance_data = input_workout_distance_info()
         validate_user_workout_distance_input(distance_data)
         update_worksheet(time_data, distance_data, "Exercise Bike")
 
