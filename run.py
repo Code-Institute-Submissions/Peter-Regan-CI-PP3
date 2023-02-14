@@ -239,10 +239,10 @@ def calculate_average_workout_scores(worksheet):
         # Convert average seconds back to hh:mm:ss format
         avg_time = str(datetime.timedelta(seconds=avg_seconds))
         print(f"Your average workout duration for your last three {worksheet} workouts is {avg_time}.")
-    elif len(duration_column_entries) < 4:
+    elif len(duration_column_entries) < 4 and len(duration_column_entries) > 1:
         print(f"You haven't logged three {worksheet} workouts yet, but here's your existing data anyway!")
         # Convert time values to seconds
-        seconds = [datetime.datetime.strptime(t, '%H:%M:%S').time().second + datetime.datetime.strptime(t, '%H:%M:%S').time().minute * 60 + datetime.datetime.strptime(t, '%H:%M:%S').time().hour * 3600 for t in duration_column_entries]
+        seconds = [datetime.datetime.strptime(t, '%H:%M:%S').time().second + datetime.datetime.strptime(t, '%H:%M:%S').time().minute * 60 + datetime.datetime.strptime(t, '%H:%M:%S').time().hour * 3600 for t in duration_column_entries[1:]]
         # Calculate average of seconds
         avg_seconds = sum(seconds) / len(seconds)
         # Convert average seconds back to hh:mm:ss format
@@ -254,16 +254,16 @@ def calculate_average_workout_scores(worksheet):
     distance_column_entries = workout_type_to_be_displayed.col_values(3)
     if len(distance_column_entries) >= 4:
         distance_column_last_three_entries = distance_column_entries[-3:]
-        distance_column_last_three_entries = [float(entry) for entry in distance_column_entries[1:]]
+        distance_column_last_three_entries = [float(entry) for entry in distance_column_entries]
         avg_distance = sum(distance_column_last_three_entries) / len(distance_column_last_three_entries)
         print(f"Your average distance covered for your last three {worksheet} workouts is {avg_distance}.")
-    elif len(distance_column_entries) < 4:
+    elif len(distance_column_entries) < 4 and len(distance_column_entries) > 1:
         print(f"You haven't logged three {worksheet} workouts yet, but here's your existing data anyway!")
         distance_column_entries = [float(entry) for entry in distance_column_entries[1:]]
-        avg_distance = sum(distance_column_last_three_entries) / len(distance_column_last_three_entries)
+        avg_distance = sum(distance_column_entries) / len(distance_column_entries)
         print(f"Your average distance covered for your last three {worksheet} workouts is {avg_distance}.")
     elif len(distance_column_entries) <= 1:
-        print(f"You haven't logged any {worksheet} workouts yet.")
+        pass
 
 
 def validate_user_workout_duration_input(time_data):
@@ -370,7 +370,7 @@ def main():
     """
     print("Welcome to Unstoppable UT2, where you can keep track of your UT2 performance. In case you're unfamiliar with the term 'UT2', it refers to an aerobic workout at an intensity which can be held for the full workout duration. You should be comfortable enough to speak and be operating at 65-75% maximimum heart rate. The workout should last approximately 60 minutes.")
     search_file()
-    user_workout_choice()
+    
 
 
 username = type_username()
