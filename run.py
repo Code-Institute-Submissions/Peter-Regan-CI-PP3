@@ -33,8 +33,7 @@ def type_username():
     Here is where the user will enter
     their username.
     """
-    username = input("Create your new username here. If you've visited us"
-    " before, we will fetch your existing data!\n")
+    username = input("Type your username here.\n If you're a new user, remember this username so you can access your data again in futire. If you've visited us before, we will fetch your existing data!\n")
     return username
 
 
@@ -100,12 +99,13 @@ def search_file():
                                             pageToken=page_token).execute()
             for file in response.get('files', []):
                 # Process change
-                print(f"Welcome back {username}!\nWhat would you like to do today?")
+                existing_user_choice()
             files.extend(response.get('files', []))
             page_token = response.get('nextPageToken', None)
             if not files:
-                print(f"Thanks for signing up {username}!\nWhat would you like to do today?")
+                print(f"Thanks for signing up {username}!\n")
                 create_new_user_workbook()
+                user_workout_choice()
             if page_token is None:
                 break
             
@@ -155,23 +155,53 @@ def user_workout_choice():
         update_worksheet(time_data, distance_data, "Exercise Bike")
 
 
-# def existing_user_choice():
-#     print(f"Welcome back {username}! What would you like to do today?")
-#     print("1. Log a new workout\n2. View the data from previous workouts\n3. View your averge scores from your last three workours\n4. View your improvement trend")
-#     user_choice = None
+def existing_user_choice():
+    """
+    This will allow an existing user
+    to decide if they want to log a new workout
+    or get data about their previous workouts.
+    """
+    print(f"Welcome back {username}! What would you like to do today?")
+    print("1. Log a new workout\n2. View the data from previous workouts\n3. View your averge scores from your last three workouts\n")
+    user_choice = None
 
-#     while user_choice not in ['1', '2', '3', '4']:
-#         user_choice = input("Type 1, 2 or 3 to choose one of the above.")
-#         user_choice = int(user_choice)
+    while user_choice not in ['1', '2', '3',]:
+        user_choice = input("Type 1, 2 or 3 to choose one of the above.")
+    user_choice = int(user_choice)
     
-#     if user_choice == 1:
-#         print("You've chosen to log a new workout.")
-#         user_workout_choice()
+    if user_choice == 1:
+        print("You've chosen to log a new workout.")
+        user_workout_choice()
 
-#     if user_choice == 2:
-#         print("You've chosen to view the data from your previous workouts.")
-#         data reading function to get exisitng data goes here
+    if user_choice == 2:
+        print("You've chosen to view the data from your previous workouts.\n")
+        print("Type 1 to view your treadmill workout data.\nType 2 to view your rowing ergometer data.\nType 3 to view your exercise bike data.")
+        worksheet = None
+        while worksheet not in ['1', '2', '3']:
+            worksheet = input("Type 1, 2 or 3 to choose one of the above.")
+        worksheet = int(worksheet)
+        if worksheet == 1:
+            worksheet = "Treadmill"
+        elif worksheet == 2:
+            worksheet = "Rowing Ergometer"
+        elif worksheet == 3:
+            worksheet = "Exercise Bike"
+        display_all_previous_workout_entries(worksheet)
 
+    if user_choice == 3:
+        print("You've chosen to view your averge scores from your last three workouts.")
+        print("Type 1 to view your average treadmill workout data.\nType 2 to view your average rowing ergometer data.\nType 3 to view your average exercise bike data.")
+        worksheet = None
+        while worksheet not in ['1', '2', '3']:
+            worksheet = input("Type 1, 2 or 3 to choose one of the above.")
+        worksheet = int(worksheet)
+        if worksheet == 1:
+            worksheet = "Treadmill"
+        elif worksheet == 2:
+            worksheet = "Rowing Ergometer"
+        elif worksheet == 3:
+            worksheet = "Exercise Bike"
+        calculate_average_workout_scores(worksheet)
 
 
 def display_all_previous_workout_entries(worksheet):
@@ -189,7 +219,6 @@ def display_all_previous_workout_entries(worksheet):
     df.columns = ["Column 1", "Column 2", "Column 3"]
     print(df)
     return df
-
 
 
 def calculate_average_workout_scores(worksheet):
@@ -225,36 +254,17 @@ def calculate_average_workout_scores(worksheet):
     distance_column_entries = workout_type_to_be_displayed.col_values(3)
     if len(distance_column_entries) >= 4:
         distance_column_last_three_entries = distance_column_entries[-3:]
-        avg_distance = sum(float(distance_column_last_three_entries)) / len(distance_column_last_three_entries)
+        distance_column_last_three_entries = [float(entry) for entry in distance_column_entries[1:]]
+        avg_distance = sum(distance_column_last_three_entries) / len(distance_column_last_three_entries)
         print(f"Your average distance covered for your last three {worksheet} workouts is {avg_distance}.")
     elif len(distance_column_entries) < 4:
         print(f"You haven't logged three {worksheet} workouts yet, but here's your existing data anyway!")
-        avg_distance = sum(float(distance_column_entries)) / len(distance_column_entries)
-        print(avg_distance)
+        distance_column_entries = [float(entry) for entry in distance_column_entries[1:]]
+        avg_distance = sum(distance_column_last_three_entries) / len(distance_column_last_three_entries)
+        print(f"Your average distance covered for your last three {worksheet} workouts is {avg_distance}.")
     elif len(distance_column_entries) <= 1:
         print(f"You haven't logged any {worksheet} workouts yet.")
 
-
-# def validate_user_workout_duration_input():
-#     """
-#     This will ensure that the user may only
-#     input data in this format - 00:00:00 -
-#     where the first two digits correspond to hours,
-#     the second two digits correspond to minutes
-#     and the last two digist correspond to seconds.
-#     """
-#     time_format = re.compile(r'\d\d:\d\d:\d\d')
-#     while True:
-#         time_data = input("Please input your workout duration here: ")
-#         match = time_format.fullmatch(time_data)
-#         if match is not None:
-#             return time_data
-#         else:
-#             print("Your time has not been entered in the correct format.\n")
-#             print("Your time should be entered in this format - 00:00:00\n")
-#             print("E.g. if your workout was an hour and twenty minutes long, ")
-#             print("you would enter 01:20:00.\n")
-#             print("Please try again.")
 
 def validate_user_workout_duration_input(time_data):
     """
@@ -303,26 +313,6 @@ def validate_user_workout_distance_input(distance_data):
             distance_data = input("Input your distance covered in kilometres in this format - 00.00 ")
     
     return True
-
-# def validate_user_workout_distance_input():
-#     """
-#     This will ensure that the user may only
-#     input data in this format - 00.00 -
-#     the digits correspond to kilometers measured
-#     to two decimal places.
-#     """
-#     distance_format = re.compile(r'\d\d.\d\d')
-#     while True:
-#         distance_data = input("Please input your workout duration here: ")
-#         match = distance_format.fullmatch(distance_data)
-#         if match is not None:
-#             return True
-#         else:
-#             print("Your distance has not been entered in the correct format.\n")
-#             print("Your distance should be entered in this format - 00.00\n")
-#             print("E.g. if you cycled 23.4km on the exercise bike, ")
-#             print("you would enter 23.40\n")
-#             print("Please try again.")
 
 
 def input_workout_duration_info():
