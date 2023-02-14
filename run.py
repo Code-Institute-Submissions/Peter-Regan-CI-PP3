@@ -135,7 +135,7 @@ def user_workout_choice():
         validate_user_workout_duration_input(time_data)
         distance_data = input_workout_distance_info()
         validate_user_workout_distance_input(distance_data)  
-        # update_worksheet(time_data, distance_data, "Treadmill")
+        update_worksheet(time_data, distance_data, "Treadmill")
 
     elif workout_choice == 2:
         print("You've chosen to update your rowing ergometer data.")
@@ -143,7 +143,7 @@ def user_workout_choice():
         validate_user_workout_duration_input(time_data)
         distance_data = input_workout_distance_info()
         validate_user_workout_distance_input(distance_data)
-        # update_worksheet(time_data, distance_data, "Rowing Ergometer")
+        update_worksheet(time_data, distance_data, "Rowing Ergometer")
 
     elif workout_choice == 3:
         print("You've chosen to update your exercise bike data.")
@@ -151,7 +151,54 @@ def user_workout_choice():
         validate_user_workout_duration_input(time_data)
         distance_data = input_workout_distance_info()
         validate_user_workout_distance_input(distance_data)
-    #     update_worksheet(time_data, distance_data, "Exercise Bike")
+        update_worksheet(time_data, distance_data, "Exercise Bike")
+
+
+# def existing_user_choice():
+#     print(f"Welcome back {username}! What would you like to do today?")
+#     print("1. Log a new workout\n2. View the data from previous workouts\n3. View your averge scores from your last three workours\n4. View your improvement trend")
+#     user_choice = None
+
+#     while user_choice not in ['1', '2', '3', '4']:
+#         user_choice = input("Type 1, 2 or 3 to choose one of the above.")
+#         user_choice = int(user_choice)
+    
+#     if user_choice == 1:
+#         print("You've chosen to log a new workout.")
+#         user_workout_choice()
+
+#     if user_choice == 2:
+#         print("You've chosen to view the data from your previous workouts.")
+#         data reading function to get exisitng data goes here
+
+
+
+def display_all_previous_workout_entries(worksheet):
+    """
+    This function will allow the user to see their data from 
+    past workouts.
+    """
+    username_sheet = GSPREAD_CLIENT.open(f'{username} UT2 Tracker Spreadsheet')
+    workout_type_to_be_displayed = username_sheet.worksheet(worksheet)
+    columns = []
+    for ind in range(1,4):
+        column = workout_type_to_be_displayed.col_values(ind)
+        columns.append(column)
+    return columns
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
 
 
 # def validate_user_workout_duration_input():
@@ -177,9 +224,11 @@ def user_workout_choice():
 
 def validate_user_workout_duration_input(time_data):
     """
-    Inside the try, converts all string values to integeres.
-    Raises ValueError if strings cannot be converted into int,
-    or if there aren't exactly 6 values.
+    This will ensure that the user may only
+    input data in this format - 00:00:00 -
+    where the first two digits correspond to hours,
+    the second two digits correspond to minutes
+    and the last two digist correspond to seconds.
     """
     time_format = re.compile(r'\d\d:\d\d:\d\d')
     while True:
@@ -199,9 +248,10 @@ def validate_user_workout_duration_input(time_data):
 
 def validate_user_workout_distance_input(distance_data):
     """
-    Inside the try, converts all string values to integeres.
-    Raises ValueError if strings cannot be converted into int,
-    or if there aren't exactly 6 values.
+    This will ensure that the user may only
+    input data in this format - 00.00 -
+    the digits correspond to kilometers measured
+    to two decimal places.
     """
     distance_format = re.compile(r'\d\d.\d\d')
     while True:
@@ -274,19 +324,19 @@ def input_workout_distance_info():
     return distance_data
 
 
-# def update_worksheet(time_data, distance_data, worksheet):
-#     """
-#     This function will add the user's workout distance
-#     and duration data and append it to a row in their
-#     spreadsheet along with the date of data entry.
-#     """
-#     username_sheet = GSPREAD_CLIENT.open(f'{username} UT2 Tracker Spreadsheet')
-#     worksheet_to_update = username_sheet.worksheet(worksheet)
-#     current_date = datetime.datetime.now()
-#     date_string = current_date.strftime("%d-%m-%Y")
-#     row_to_append = [date_string, time_data, distance_data]
-#     worksheet_to_update.append_row(row_to_append)
-#     print(f"{worksheet} worksheet updated successfully.")
+def update_worksheet(time_data, distance_data, worksheet):
+    """
+    This function will add the user's workout distance
+    and duration data and append it to a row in their
+    spreadsheet along with the date of data entry.
+    """
+    username_sheet = GSPREAD_CLIENT.open(f'{username} UT2 Tracker Spreadsheet')
+    worksheet_to_update = username_sheet.worksheet(worksheet)
+    current_date = datetime.datetime.now()
+    date_string = current_date.strftime("%d-%m-%Y")
+    row_to_append = [date_string, time_data, distance_data]
+    worksheet_to_update.append_row(row_to_append)
+    print(f"{worksheet} worksheet updated successfully.")
 
 
 def main():
@@ -294,7 +344,7 @@ def main():
     Run all programme functions
     """
     print("Welcome to Unstoppable UT2, where you can keep track of your UT2 performance. In case you're unfamiliar with the term 'UT2', it refers to an aerobic workout at an intensity which can be held for the full workout duration. You should be comfortable enough to speak and be operating at 65-75% maximimum heart rate. The workout should last approximately 60 minutes.")
-    # search_file()
+    search_file()
     user_workout_choice()
 
 
