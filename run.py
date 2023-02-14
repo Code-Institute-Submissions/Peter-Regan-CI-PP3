@@ -4,6 +4,7 @@ import gspread
 import os
 import re
 import datetime
+import pandas as pd
 from dotenv import load_dotenv
 from google.oauth2.service_account import Credentials
 # The code on line 4 was taken from this url:
@@ -184,7 +185,10 @@ def display_all_previous_workout_entries(worksheet):
     for ind in range(1,4):
         column = workout_type_to_be_displayed.col_values(ind)
         columns.append(column)
-    return columns
+    df = pd.DataFrame(columns).transpose()
+    df.columns = ["Column 1", "Column 2", "Column 3"]
+    print(df)
+    return df
 
 
 
