@@ -280,6 +280,7 @@ def validate_user_workout_duration_input(time_data):
     
     return True
 
+
 def validate_user_workout_distance_input(distance_data):
     """
     This will ensure that the user may only
