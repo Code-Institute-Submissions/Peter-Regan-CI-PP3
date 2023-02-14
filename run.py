@@ -192,17 +192,47 @@ def display_all_previous_workout_entries(worksheet):
 
 
 
+def calculate_average_workout_scores(worksheet):
+    """
+    This function will display the user's average
+    workout duration and distance covered for a given
+    workout type using the 3 most recent entries.
+    """
+    username_sheet = GSPREAD_CLIENT.open(f'{username} UT2 Tracker Spreadsheet')
+    workout_type_to_be_displayed = username_sheet.worksheet(worksheet)
+    duration_column_entries = workout_type_to_be_displayed.col_values(2)
+    if len(duration_column_entries) >= 4:
+        duration_column_last_three_entries = duration_column_entries[-3:]
+        # Convert time values to seconds
+        seconds = [datetime.datetime.strptime(t, '%H:%M:%S').time().second + datetime.datetime.strptime(t, '%H:%M:%S').time().minute * 60 + datetime.datetime.strptime(t, '%H:%M:%S').time().hour * 3600 for t in duration_column_last_three_entries]
+        # Calculate average of seconds
+        avg_seconds = sum(seconds) / len(seconds)
+        # Convert average seconds back to hh:mm:ss format
+        avg_time = str(datetime.timedelta(seconds=avg_seconds))
+        print(f"Your average workout duration for your last three {worksheet} workouts is {avg_time}.")
+    elif len(duration_column_entries) < 4:
+        print(f"You haven't logged three {worksheet} workouts yet, but here's your existing data anyway!")
+        # Convert time values to seconds
+        seconds = [datetime.datetime.strptime(t, '%H:%M:%S').time().second + datetime.datetime.strptime(t, '%H:%M:%S').time().minute * 60 + datetime.datetime.strptime(t, '%H:%M:%S').time().hour * 3600 for t in duration_column_entries]
+        # Calculate average of seconds
+        avg_seconds = sum(seconds) / len(seconds)
+        # Convert average seconds back to hh:mm:ss format
+        avg_time = str(datetime.timedelta(seconds=avg_seconds))
+        print(f"Your average workout duration for your {worksheet} workouts is {avg_time}.")
+    elif len(duration_column_entries) <= 1:
+        print(f"You haven't logged any {worksheet} workouts yet.")
 
-
-
-
-
-
-
-
-    
-
-
+    distance_column_entries = workout_type_to_be_displayed.col_values(3)
+    if len(distance_column_entries) >= 4:
+        distance_column_last_three_entries = distance_column_entries[-3:]
+        avg_distance = sum(float(distance_column_last_three_entries)) / len(distance_column_last_three_entries)
+        print(f"Your average distance covered for your last three {worksheet} workouts is {avg_distance}.")
+    elif len(distance_column_entries) < 4:
+        print(f"You haven't logged three {worksheet} workouts yet, but here's your existing data anyway!")
+        avg_distance = sum(float(distance_column_entries)) / len(distance_column_entries)
+        print(avg_distance)
+    elif len(distance_column_entries) <= 1:
+        print(f"You haven't logged any {worksheet} workouts yet.")
 
 
 # def validate_user_workout_duration_input():
