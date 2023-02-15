@@ -273,7 +273,7 @@ def validate_user_workout_duration_input(time_data):
     the second two digits correspond to minutes
     and the last two digist correspond to seconds.
     """
-    time_format = re.compile(r'\d\d:\d\d:\d\d')
+    time_format = re.compile(r'^([01]\d|2[0-3]):([0-5]\d):([0-5]\d)$')
     while True:
         try:
             time_data_str = str(time_data)
@@ -281,6 +281,11 @@ def validate_user_workout_duration_input(time_data):
             if match is None:
                 raise ValueError(
                     f"Your workout time must be entered in this format - 00:00:00. You entered {time_data}"
+                    )
+            hours, minutes, seconds = [int(x) for x in time_data_str.split(':')]
+            if hours >= 24 or minutes >= 60 or seconds >= 60:
+                raise ValueError(
+                    f"Your workout time must be less than 24 hours. The value for minutes must be less than 60. The value for seconds must be less than 60. You entered {time_data}"
                     )
             break
         except ValueError as e:
