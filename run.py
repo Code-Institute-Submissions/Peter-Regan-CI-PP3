@@ -332,7 +332,7 @@ def existing_user_choice(username):
             worksheet = "Rowing Ergometer"
         elif worksheet == 3:
             worksheet = "Exercise Bike"
-        display_all_previous_workout_entries(worksheet)
+        display_all_previous_workout_entries(worksheet, username)
 
     if user_choice == 3:
         print("You've chosen to view your averge scores from your last three workouts.")
@@ -347,10 +347,10 @@ def existing_user_choice(username):
             worksheet = "Rowing Ergometer"
         elif worksheet == 3:
             worksheet = "Exercise Bike"
-        calculate_average_workout_scores(worksheet)
+        calculate_average_workout_scores(worksheet, username)
 
 
-def display_all_previous_workout_entries(worksheet):
+def display_all_previous_workout_entries(worksheet, username):
     """
     This function will allow the user to see their data from 
     past workouts.
@@ -367,7 +367,7 @@ def display_all_previous_workout_entries(worksheet):
     return df
 
 
-def calculate_average_workout_scores(worksheet):
+def calculate_average_workout_scores(worksheet, username):
     """
     This function will display the user's average
     workout duration and distance covered for a given
