@@ -51,11 +51,15 @@ def new_user_or_existing_user():
             if search_username(username):
                 print("Username already exists. Please select a different one.")
             else:
-                type_new_password()
+                password = type_new_password()
                 write_username_and_password_to_data_sheet(username, password)
                 return username
 
 def write_username_and_password_to_data_sheet(username, password):
+    """ 
+    This will add the user's username and password
+    to the username and password spreadsheet.
+    """
     worksheet = USERNAME_PASSWORD_DATA_SHEET.sheet1
     next_row = len(worksheet.get_all_values()) + 1
     new_row = [username, password]
