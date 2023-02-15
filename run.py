@@ -518,16 +518,14 @@ def main():
     while True:
         new_user_or_existing_user()
         continue_or_quit_choice = input("Type 1 to run the program again or 2 to leave Unstoppable UT2 for today: ")
-        if continue_or_quit_choice == 1:
+        if continue_or_quit_choice == '1':
             # The user chose to run the program again
             continue
-        elif continue_or_quit_choice == 2:
+        elif continue_or_quit_choice == '2':
             # The user chose to quit the program
             break
         else:
             print('Invalid choice. Please try again.')
 
-# username = type_username()
-# main()
 
 main()
