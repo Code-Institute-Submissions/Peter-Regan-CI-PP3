@@ -53,11 +53,27 @@ def new_user_or_existing_user():
             else:
                 password = type_new_password()
                 write_username_and_password_to_data_sheet(username, password)
-                return username
+                # return username
+                search_file(username)
+                return
 
     if existing_or_new_choice == 2:
-        existing_user()
-                
+        while True:
+            username = type_username()
+            if search_username(username):
+                password = type_new_password()
+                if check_password(username, password):
+                    existing_user_choice(username)
+                    break
+                else:
+                    print("Incorrect password. Please try again.")
+            else:
+                print("Username not found.")
+                response = input("Type 1 to enter a new username or type 2 to try again with the same username: ")
+                if response == "1":
+                    new_user_or_existing_user()
+            
+              
 
 def existing_user():
     """
@@ -68,12 +84,13 @@ def existing_user():
         if search_username(username):
             password = type_new_password()
             if check_password(username, password):
-                # Call another function for existing users
+                existing_user_choice()
                 return
             else:
                 print("Incorrect password. Please try again.")
         else:
             print("Username not found. Please try again.")
+
 
 
 def check_password(username, password):
@@ -110,10 +127,10 @@ def search_username(username):
     to see if the username already exists.
     """
     worksheet = USERNAME_PASSWORD_DATA_SHEET.sheet1
-    try:
-        _ = worksheet.find(username)
+    usernames = worksheet.col_values(1)
+    if username in usernames:
         return True
-    except gspread.exceptions.CellNotFound:
+    else:
         return False
 
 
@@ -148,11 +165,13 @@ def type_username():
             print("Username must contain a minimum of 5 characters.")
         elif not re.match("^[a-z]*$", username):
             print("Username must contain only lowercase letters without spaces, numbers or symbols.")
+        # elif search_username(username):
+        #     print("Username already exists. Please select a different one.")
         else:
             return username
 
 
-def create_new_user_workbook():
+def create_new_user_workbook(username):
     """
     Creates new spreadsheet in Google Sheets.
     """
@@ -191,7 +210,7 @@ def create_new_user_workbook():
         print("Email address not found in the environment variables.")
 
 
-def search_file():
+def search_file(username):
     """Search file in drive location
 
     Load pre-authorized user credentials from the environment.
@@ -214,13 +233,13 @@ def search_file():
                                             pageToken=page_token).execute()
             for file in response.get('files', []):
                 # Process change
-                existing_user_choice()
+                existing_user_choice(username)
             files.extend(response.get('files', []))
             page_token = response.get('nextPageToken', None)
             if not files:
                 print(f"Thanks for signing up {username}!\n")
-                create_new_user_workbook()
-                user_workout_choice()
+                create_new_user_workbook(username)
+                user_workout_choice(username)
             if page_token is None:
                 break
             
@@ -231,7 +250,7 @@ def search_file():
     return files
 
 
-def user_workout_choice():
+def user_workout_choice(username):
     """
     This will allow user to select which workout they want to log
     and write their data to the appropriate worksheet.
@@ -255,7 +274,7 @@ def user_workout_choice():
             distance_data = input_workout_distance_info()
             if validate_user_workout_distance_input(distance_data):
                 break
-        update_worksheet(time_data, distance_data, "Treadmill")
+        update_worksheet(time_data, distance_data, "Treadmill", username)
 
     elif workout_choice == 2:
         print("You've chosen to update your rowing ergometer data.")
@@ -267,11 +286,10 @@ def user_workout_choice():
             distance_data = input_workout_distance_info()
             if validate_user_workout_distance_input(distance_data):
                 break
-        update_worksheet(time_data, distance_data, "Rowing Ergometer")
+        update_worksheet(time_data, distance_data, "Rowing Ergometer", username)
 
     elif workout_choice == 3:
         print("You've chosen to update your exercise bike data.")
-        time_data = input_workout_duration_info()
         while True:
             time_data = input_workout_duration_info()
             if validate_user_workout_duration_input(time_data):
@@ -280,10 +298,10 @@ def user_workout_choice():
             distance_data = input_workout_distance_info()
             if validate_user_workout_distance_input(distance_data):
                 break
-        update_worksheet(time_data, distance_data, "Exercise Bike")
+        update_worksheet(time_data, distance_data, "Exercise Bike", username)
 
 
-def existing_user_choice():
+def existing_user_choice(username):
     """
     This will allow an existing user
     to decide if they want to log a new workout
@@ -299,7 +317,7 @@ def existing_user_choice():
     
     if user_choice == 1:
         print("You've chosen to log a new workout.")
-        user_workout_choice()
+        user_workout_choice(username)
 
     if user_choice == 2:
         print("You've chosen to view the data from your previous workouts.\n")
@@ -476,7 +494,7 @@ def input_workout_distance_info():
     return distance_data
 
 
-def update_worksheet(time_data, distance_data, worksheet):
+def update_worksheet(time_data, distance_data, worksheet, username):
     """
     This function will add the user's workout distance
     and duration data and append it to a row in their
@@ -495,12 +513,10 @@ def main():
     """
     Run all programme functions
     """
-    search_file()
+    new_user_or_existing_user()
     
 
 # username = type_username()
 # main()
 
-username = new_user_or_existing_user()
-# username = type_username()
-# create_new_user_workbook()
+main()
