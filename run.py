@@ -32,7 +32,7 @@ email_address = os.getenv("EMAIL_ADDRESS")
 def search_username(username):
     worksheet = USERNAME_PASSWORD_DATA_SHEET.sheet1
     try:
-        cell = worksheet.find(username)
+        _ = worksheet.find(username)
         return True
     except gspread.exceptions.CellNotFound:
         return False
