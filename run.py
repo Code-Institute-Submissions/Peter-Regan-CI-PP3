@@ -29,7 +29,45 @@ USERNAME_PASSWORD_DATA_SHEET = GSPREAD_CLIENT.open('Unstoppable UT2 Username and
 email_address = os.getenv("EMAIL_ADDRESS")
 
 
+def new_user_or_existing_user():
+    """
+    Here the user will let the programme know whether they are a new or existing user.
+    Their choice will affect the resulting function calls.
+    """
+    print("Welcome to Unstoppable UT2, where you can keep track of your UT2 performance.\n")
+    print("In case you're unfamiliar with the term 'UT2', it refers to an aerobic workout at an intensity which can be held for the full workout duration.\n")
+    print("You should be comfortable enough to speak and be operating at 65-75% maximimum heart rate.\n")
+    print("The workout should last approximately 60 minutes.\n")
+    
+    existing_or_new_choice = None
+
+    while existing_or_new_choice not in ['1', '2']:
+        existing_or_new_choice = input("Type 1 if you are a new user, or type 2 if you are an existing user.")
+    existing_or_new_choice = int(existing_or_new_choice)
+
+    if existing_or_new_choice == 1:
+        while True:
+            username = type_username()
+            if search_username(username):
+                print("Username already exists. Please select a different one.")
+            else:
+                type_new_password()
+                write_username_and_password_to_data_sheet(username, password)
+                return username
+
+def write_username_and_password_to_data_sheet(username, password):
+    worksheet = USERNAME_PASSWORD_DATA_SHEET.sheet1
+    next_row = len(worksheet.get_all_values()) + 1
+    new_row = [username, password]
+    worksheet.insert_row(new_row, next_row)
+    print("User added successfully!")
+
+
 def search_username(username):
+    """
+    This function will check the username_password_data_sheet
+    to see if the username already exists.
+    """
     worksheet = USERNAME_PASSWORD_DATA_SHEET.sheet1
     try:
         _ = worksheet.find(username)
@@ -38,14 +76,39 @@ def search_username(username):
         return False
 
 
+def type_new_password():
+    """ 
+    This is where the user will type their password.
+    """
+    print("Please type your password below.\n")
+    print("It must contain a minimum of five characters.\n")
+    print("It must contain only lowercase letters, no spaces, no numbers and no special characters or symbols.\n")
+    while True:
+        password = input("Please type your password here: ")
+        if len(password) < 5:
+            print("Password must contain a minimum of 5 characters.")
+        elif not re.match("^[a-z]*$", password):
+            print("Password must contain only lowercase letters without spaces, numbers or symbols.")
+        else:
+            return password
+
 
 def type_username():
     """
     Here is where the user will enter
     their username.
     """
-    username = input("Type your username here.\n If you're a new user, remember this username so you can access your data again in future. If you've visited us before, we will fetch your existing data!\n")
-    return username
+    print("Please type your username below.\n")
+    print("It must contain a minimum of five characters.\n")
+    print("It must contain only lowercase letters, no spaces, no numbers and no special characters or symbols.\n")
+    while True:
+        username = input("Please type your username here: ")
+        if len(password) < 5:
+            print("Username must contain a minimum of 5 characters.")
+        elif not re.match("^[a-z]*$", password):
+            print("Username must contain only lowercase letters without spaces, numbers or symbols.")
+        else:
+            return username
 
 
 def create_new_user_workbook():
@@ -391,9 +454,12 @@ def main():
     """
     Run all programme functions
     """
-    print("Welcome to Unstoppable UT2, where you can keep track of your UT2 performance. In case you're unfamiliar with the term 'UT2', it refers to an aerobic workout at an intensity which can be held for the full workout duration. You should be comfortable enough to speak and be operating at 65-75% maximimum heart rate. The workout should last approximately 60 minutes.")
     search_file()
     
 
-username = type_username()
-main()
+# username = type_username()
+# main()
+
+username = new_user_or_existing_user()
+# username = type_username()
+# create_new_user_workbook()
