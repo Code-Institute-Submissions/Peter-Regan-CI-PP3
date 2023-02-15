@@ -510,28 +510,22 @@ def update_worksheet(time_data, distance_data, worksheet, username):
     worksheet_to_update.append_row(row_to_append)
     print(f"{worksheet} worksheet updated successfully.")
 
-# def continue_or_close_script(username):
-#     print("Is there anything else you'd like to do today or would you like to leave Unstoppable UT2 for now?")
-#     print("Type 1 to continue.\n")        
-#     print("Type 2 to leave Unstoppable UT2 for today\n")
-#     continue_or_close_choice = None
-#     while continue_or_close_choice not in ['1', '2', ]:
-#         continue_or_close_choice = input("Type 1 or 2 to choose one of the above.")
-#     continue_or_close_choice = int(continue_or_close_choice)
-#     if continue_or_close_choice == 1:
-#         existing_user_choice(username)
-#     if continue_or_close_choice == 2:
-#         print("Bye for now - see you soon!")
-#         return
-
-
 
 def main():
     """
     Run all programme functions
     """
-    new_user_or_existing_user()
-    
+    while True:
+        new_user_or_existing_user()
+        continue_or_quit_choice = input("Type 1 to run the program again or 2 to leave Unstoppable UT2 for today: ")
+        if continue_or_quit_choice == 1:
+            # The user chose to run the program again
+            continue
+        elif continue_or_quit_choice == 2:
+            # The user chose to quit the program
+            break
+        else:
+            print('Invalid choice. Please try again.')
 
 # username = type_username()
 # main()
