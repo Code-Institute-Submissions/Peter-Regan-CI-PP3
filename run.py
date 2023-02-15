@@ -55,6 +55,28 @@ def new_user_or_existing_user():
                 write_username_and_password_to_data_sheet(username, password)
                 return username
 
+    if existing_or_new_choice == 2:
+        username = type_username()
+                
+
+
+
+
+def check_password(username, password):
+    """
+    This function checks if the given password matches the password for the given username.
+    """
+    worksheet = USERNAME_PASSWORD_DATA_SHEET.sheet1
+    row = None
+    try:
+        row = worksheet.find(username).row
+    except gspread.exceptions.CellNotFound:
+        return False
+    if worksheet.cell(row, 2).value == password:
+        return True
+    else:
+        return False
+
 def write_username_and_password_to_data_sheet(username, password):
     """ 
     This will add the user's username and password
