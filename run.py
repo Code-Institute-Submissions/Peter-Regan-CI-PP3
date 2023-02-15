@@ -84,7 +84,7 @@ def existing_user():
         if search_username(username):
             password = type_new_password()
             if check_password(username, password):
-                existing_user_choice()
+                existing_user_choice(username)
                 return
             else:
                 print("Incorrect password. Please try again.")
@@ -509,6 +509,21 @@ def update_worksheet(time_data, distance_data, worksheet, username):
     row_to_append = [date_string, time_data, distance_data]
     worksheet_to_update.append_row(row_to_append)
     print(f"{worksheet} worksheet updated successfully.")
+
+# def continue_or_close_script(username):
+#     print("Is there anything else you'd like to do today or would you like to leave Unstoppable UT2 for now?")
+#     print("Type 1 to continue.\n")        
+#     print("Type 2 to leave Unstoppable UT2 for today\n")
+#     continue_or_close_choice = None
+#     while continue_or_close_choice not in ['1', '2', ]:
+#         continue_or_close_choice = input("Type 1 or 2 to choose one of the above.")
+#     continue_or_close_choice = int(continue_or_close_choice)
+#     if continue_or_close_choice == 1:
+#         existing_user_choice(username)
+#     if continue_or_close_choice == 2:
+#         print("Bye for now - see you soon!")
+#         return
+
 
 
 def main():
