@@ -132,26 +132,53 @@ def user_workout_choice():
 
     if workout_choice == 1:
         print("You've chosen to update your treadmill data.")
-        time_data = input_workout_duration_info()
-        validate_user_workout_duration_input(time_data)
-        distance_data = input_workout_distance_info()
-        validate_user_workout_distance_input(distance_data)  
+        # time_data = input_workout_duration_info()
+        # if validate_user_workout_duration_input(time_data):
+        #     distance_data = input_workout_distance_info()
+        #     if validate_user_workout_distance_input(distance_data):  
+        #         update_worksheet(time_data, distance_data, "Treadmill")
+        while True:
+            time_data = input_workout_duration_info()
+            if validate_user_workout_duration_input(time_data):
+                break
+        while True:
+            distance_data = input_workout_distance_info()
+            if validate_user_workout_distance_input(distance_data):
+                break
         update_worksheet(time_data, distance_data, "Treadmill")
 
     elif workout_choice == 2:
         print("You've chosen to update your rowing ergometer data.")
-        time_data = input_workout_duration_info()
-        validate_user_workout_duration_input(time_data)
-        distance_data = input_workout_distance_info()
-        validate_user_workout_distance_input(distance_data)
+        # time_data = input_workout_duration_info()
+        # if validate_user_workout_duration_input(time_data):
+        #     distance_data = input_workout_distance_info()
+        #     if validate_user_workout_distance_input(distance_data):
+        #         update_worksheet(time_data, distance_data, "Rowing Ergometer")
+        while True:
+            time_data = input_workout_duration_info()
+            if validate_user_workout_duration_input(time_data):
+                break
+        while True:
+            distance_data = input_workout_distance_info()
+            if validate_user_workout_distance_input(distance_data):
+                break
         update_worksheet(time_data, distance_data, "Rowing Ergometer")
 
     elif workout_choice == 3:
         print("You've chosen to update your exercise bike data.")
         time_data = input_workout_duration_info()
-        validate_user_workout_duration_input(time_data)
-        distance_data = input_workout_distance_info()
-        validate_user_workout_distance_input(distance_data)
+        # if validate_user_workout_duration_input(time_data):
+        #     distance_data = input_workout_distance_info()
+        #     if validate_user_workout_distance_input(distance_data):
+        #         update_worksheet(time_data, distance_data, "Exercise Bike")
+        while True:
+            time_data = input_workout_duration_info()
+            if validate_user_workout_duration_input(time_data):
+                break
+        while True:
+            distance_data = input_workout_distance_info()
+            if validate_user_workout_distance_input(distance_data):
+                break
         update_worksheet(time_data, distance_data, "Exercise Bike")
 
 
@@ -274,25 +301,27 @@ def validate_user_workout_duration_input(time_data):
     and the last two digist correspond to seconds.
     """
     time_format = re.compile(r'^([01]\d|2[0-3]):([0-5]\d):([0-5]\d)$')
-    while True:
-        try:
-            time_data_str = str(time_data)
-            match = time_format.fullmatch(time_data_str)
-            if match is None:
-                raise ValueError(
-                    f"Your workout time must be entered in this format - 00:00:00. You entered {time_data}"
-                    )
-            hours, minutes, seconds = [int(x) for x in time_data_str.split(':')]
-            if hours >= 24 or minutes >= 60 or seconds >= 60:
-                raise ValueError(
-                    f"Your workout time must be less than 24 hours. The value for minutes must be less than 60. The value for seconds must be less than 60. You entered {time_data}"
-                    )
-            break
-        except ValueError as e:
-            print(f"Invalid data: {e}, please try again.\n")
-            time_data = input("Enter your workout time in this format - 00:00:00: ")
-    
-    return True
+    try:
+        match = time_format.fullmatch(time_data)
+        if match is None:
+            print(
+                f"Your workout time must be less than 24 hours. The value for minutes must be less than 60. The value for seconds must be less than 60. You entered {time_data}"
+                )
+            raise ValueError(
+                f"Your workout time must be less than 24 hours. The value for minutes must be less than 60. The value for seconds must be less than 60. You entered {time_data}"
+                )
+        else:
+            return True
+        # hours, minutes, seconds = [int(x) for x in time_data_str.split(':')]
+        # if hours >= 24 or minutes >= 60 or seconds >= 60:
+        #     raise ValueError(
+        #                 f"Your workout time must be less than 24 hours. The value for minutes must be less than 60. The value for seconds must be less than 60. You entered {time_data}"
+        #                 )
+        # else:
+        #     return True
+    except ValueError as e:
+        print(f"Invalid data: {e}, please try again.\n")
+        return False
 
 
 def validate_user_workout_distance_input(distance_data):
@@ -329,9 +358,10 @@ def input_workout_duration_info():
         print("Your time should be entered in this format - 00:00:00\n")
         print("E.g. if your workout was an hour and twenty minutes long, ")
         print("you would enter 01:20:00.\n")
+        print("Your value for hours must be less than 24. Your value for minutes must be less than 60. Your value for seconds must be less than 60.\n")
         time_data = input("Please input your workout duration here: ")
         if time_data:
-            print("Thank you! Your UT2 Tracker data is being updated.")
+            # print("Thank you! Your UT2 Tracker data is being updated.")
             break
     return time_data
         
