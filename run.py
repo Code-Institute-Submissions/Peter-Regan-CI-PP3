@@ -59,7 +59,21 @@ def new_user_or_existing_user():
         username = type_username()
                 
 
-
+def existing_user():
+    """
+    This function is called if the user is an existing user.
+    """
+    while True:
+        username = type_username()
+        if search_username(username):
+            password = type_password()
+            if check_password(username, password):
+                # Call another function for existing users
+                return
+            else:
+                print("Incorrect password. Please try again.")
+        else:
+            print("Username not found. Please try again.")
 
 
 def check_password(username, password):
