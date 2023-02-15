@@ -25,7 +25,18 @@ CREDS = Credentials.from_service_account_file("creds.json")
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('UT2 Tracker Spreadsheet')
+USERNAME_PASSWORD_DATA_SHEET = GSPREAD_CLIENT.open('Unstoppable UT2 Username and Password Data')
 email_address = os.getenv("EMAIL_ADDRESS")
+
+
+def search_username(username):
+    worksheet = USERNAME_PASSWORD_DATA_SHEET.sheet1
+    try:
+        cell = worksheet.find(username)
+        return True
+    except gspread.exceptions.CellNotFound:
+        return False
+
 
 
 def type_username():
