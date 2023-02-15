@@ -33,7 +33,7 @@ def type_username():
     Here is where the user will enter
     their username.
     """
-    username = input("Type your username here.\n If you're a new user, remember this username so you can access your data again in futire. If you've visited us before, we will fetch your existing data!\n")
+    username = input("Type your username here.\n If you're a new user, remember this username so you can access your data again in future. If you've visited us before, we will fetch your existing data!\n")
     return username
 
 
