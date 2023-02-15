@@ -56,7 +56,7 @@ def new_user_or_existing_user():
                 return username
 
     if existing_or_new_choice == 2:
-        username = type_username()
+        existing_user()
                 
 
 def existing_user():
@@ -66,7 +66,7 @@ def existing_user():
     while True:
         username = type_username()
         if search_username(username):
-            password = type_password()
+            password = type_new_password()
             if check_password(username, password):
                 # Call another function for existing users
                 return
@@ -90,6 +90,7 @@ def check_password(username, password):
         return True
     else:
         return False
+
 
 def write_username_and_password_to_data_sheet(username, password):
     """ 
@@ -143,9 +144,9 @@ def type_username():
     print("It must contain only lowercase letters, no spaces, no numbers and no special characters or symbols.\n")
     while True:
         username = input("Please type your username here: ")
-        if len(password) < 5:
+        if len(username) < 5:
             print("Username must contain a minimum of 5 characters.")
-        elif not re.match("^[a-z]*$", password):
+        elif not re.match("^[a-z]*$", username):
             print("Username must contain only lowercase letters without spaces, numbers or symbols.")
         else:
             return username
