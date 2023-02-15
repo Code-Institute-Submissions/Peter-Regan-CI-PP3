@@ -233,7 +233,9 @@ def search_file(username):
                                             pageToken=page_token).execute()
             for file in response.get('files', []):
                 # Process change
-                existing_user_choice(username)
+                if f'{username} UT2 Tracker Spreadsheet' in file['name']:
+                    existing_user_choice(username)
+                    return
             files.extend(response.get('files', []))
             page_token = response.get('nextPageToken', None)
             if not files:
