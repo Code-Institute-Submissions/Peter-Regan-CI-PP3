@@ -42,16 +42,18 @@ def new_user_or_existing_user():
     existing_or_new_choice = None
 
     while existing_or_new_choice not in ['1', '2']:
-        existing_or_new_choice = input("Type 1 if you are a new user, or type 2 if you are an existing user.")
+        existing_or_new_choice = input("Type 1 if you are a new user, or type 2 if you are an existing user: ")
+        print("")
     existing_or_new_choice = int(existing_or_new_choice)
-
     if existing_or_new_choice == 1:
         while True:
             username = type_username()
+            print("")
             if search_username(username):
                 print("Username already exists. Please select a different one.")
             else:
                 password = type_new_password()
+                print("")
                 write_username_and_password_to_data_sheet(username, password)
                 # return username
                 search_file(username)
@@ -118,7 +120,7 @@ def write_username_and_password_to_data_sheet(username, password):
     next_row = len(worksheet.get_all_values()) + 1
     new_row = [username, password]
     worksheet.insert_row(new_row, next_row)
-    print("User added successfully!")
+    print("User added successfully!\n")
 
 
 def search_username(username):
@@ -265,7 +267,7 @@ def user_workout_choice(username):
     while workout_choice not in ['1', '2', '3']:
         workout_choice = input("Type 1, 2 or 3 to choose one of the above.")
     workout_choice = int(workout_choice)
-
+    print("")
     if workout_choice == 1:
         print("You've chosen to update your treadmill data.")
         while True:
@@ -309,16 +311,18 @@ def existing_user_choice(username):
     to decide if they want to log a new workout
     or get data about their previous workouts.
     """
-    print(f"Welcome back {username}! What would you like to do today?")
+    print("")
+    print(f"Welcome back {username}! What would you like to do today?\n")
     print("1. Log a new workout\n2. View the data from previous workouts\n3. View your averge scores from your last three workouts\n")
     user_choice = None
 
     while user_choice not in ['1', '2', '3',]:
-        user_choice = input("Type 1, 2 or 3 to choose one of the above.")
+        user_choice = input("Type 1, 2 or 3 to choose one of the above: ")
+        print("")
     user_choice = int(user_choice)
     
     if user_choice == 1:
-        print("You've chosen to log a new workout.")
+        print("You've chosen to log a new workout.\n")
         user_workout_choice(username)
 
     if user_choice == 2:
@@ -326,7 +330,8 @@ def existing_user_choice(username):
         print("Type 1 to view your treadmill workout data.\nType 2 to view your rowing ergometer data.\nType 3 to view your exercise bike data.")
         worksheet = None
         while worksheet not in ['1', '2', '3']:
-            worksheet = input("Type 1, 2 or 3 to choose one of the above.")
+            worksheet = input("Type 1, 2 or 3 to choose one of the above: ")
+            print("")
         worksheet = int(worksheet)
         if worksheet == 1:
             worksheet = "Treadmill"
@@ -341,7 +346,8 @@ def existing_user_choice(username):
         print("Type 1 to view your average treadmill workout data.\nType 2 to view your average rowing ergometer data.\nType 3 to view your average exercise bike data.")
         worksheet = None
         while worksheet not in ['1', '2', '3']:
-            worksheet = input("Type 1, 2 or 3 to choose one of the above.")
+            worksheet = input("Type 1, 2 or 3 to choose one of the above: ")
+            print("")
         worksheet = int(worksheet)
         if worksheet == 1:
             worksheet = "Treadmill"
@@ -518,6 +524,7 @@ def main():
     while True:
         new_user_or_existing_user()
         continue_or_quit_choice = input("Type 1 to run the program again or 2 to leave Unstoppable UT2 for today: ")
+        print("")
         if continue_or_quit_choice == '1':
             # The user chose to run the program again
             continue
@@ -525,7 +532,7 @@ def main():
             # The user chose to quit the program
             break
         else:
-            print('Invalid choice. Please try again.')
+            print('Invalid choice. Please try again.\n')
 
 
 main()
