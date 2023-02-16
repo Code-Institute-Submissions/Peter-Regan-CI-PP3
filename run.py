@@ -31,8 +31,10 @@ def new_user_or_existing_user():
     Their choice will affect the resulting function calls.
     """
     print("Welcome to Unstoppable UT2, where you can keep track of your UT2 performance.\n")
-    print("In case you're unfamiliar with the term 'UT2', it refers to an aerobic workout at an intensity which can be held for the full workout duration.\n")
-    print("You should be comfortable enough to speak and be operating at 65-75% maximimum heart rate.\n")
+    print("In case you're unfamiliar with the term 'UT2', it refers to an aerobic workout")
+    print("at an intensity which can be held for the full workout duration.\n")
+    print("You should be comfortable enough to speak and be operating at 65-75% maximimum")
+    print("heart rate.\n")
     print("The workout should last approximately 60 minutes.\n")
     existing_or_new_choice = None
 
