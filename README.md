@@ -72,68 +72,75 @@ Some small issues include some of the lines being too long or some extensions no
 | Will program accept a username with any uppercase letters, numbers or symbols? | If password contains uppercase letters, numbers or symbols, user will receive message stating correct password format and be prompted to try again. | Same as expected. | Pass |
 | Does write_username_and_password_to_data_sheet(username, password) work? | This should take username and password data from username and write it to "Unstoppable UT2 Username and Password Data" spreadsheet in my Google Drive. | Same as expected. | Pass |
 | Does search_file(username) function call create_new_user_workbook(username) function for a new user? | If this username doesn't already exist on a spreadsheet in the google drive, create_new_user_workbook(username) should be called to create one. | Same as expected. | Pass |
-|  er submits answer that is correct, the next interval they play should be a different randomly generated interval. | Same as expected. | Pass |
-| Does "wrong answer" modal appear if user submits wrong answer? | If the user incorrectly identifies interval and presses submit, a modal should appear letting them know they are incorrect and prompt them to try again. | Same as expected. | Pass |
-| Is the same interval still played after the submission of an incorrect answer? | If the user incorrectly identifies an interval and presses submit, the next interval they play should be the same as what they heard before. | Same as expected. | Pass |
-| Does score incrementor increment the score by 1 each time user indentifies correct interval? | Score should increase by 1 after each correct interval submission. | Same as expected. | Pass |
-| Does score return to 0 after each incorrect identification of an interval? | Score should return to 0 each time an interval is incorrectly identified. | Same as expected. | Pass |
-| Is each interval number matched to correct interval description? | Interval number for perfect unison = 0 <br><br> Interval number for minor 2nd = 1 or -1 <br><br> Interval number for major 2nd = 2 or -2 <br><br> Interval number for minor 3rd = 3 or -3 <br><br> Interval number for major 3rd = 4 or -4 <br><br> Interval number for perfect 4th = 5 or -5 <br><br> Interval number for augmented 4th = 6 or -6 <br><br> Interval number for diminished 5th = 6 or -6 <br><br> Interval number for perfect 5th = 7 or -7 <br><br> Interval number for minor 6th = 8 or -8 <br><br> Interval number for major 6th = 9 or -9 <br><br> Interval number minor 7th = 10 or -10 <br><br> Interval number for major 7th = 11 or -11 <br><br> Interval number for perfect octave = 12 or -12 <br><br> This will mean that the user will always be alerted that they are correct as long as they have selected the correct interval i.e. the interval descriptions assigned to each interval number are actually correct. | Same as expected. | Pass |
-| Is Interval Master compatible with browsers other than Chrome? E.g. Microsoft Edge, Mozilla Firefox, Samsung Internet Browser | Site should appear the same on a variety of browsers. | Same as expected. | Pass |
-
+|  If a new workbook is created within the search_file(username) function call, will the user be prompted to log a new workout afterwards? | User should be given option to log a workout after new user workbook has been created. | Same as expected. | Pass |
+| Does user_workout_choice(username) function work correctly? | If the user chooses 1 they will be prompted to give data for their treadmill workout. If they choose 2 they will be prompted to input their rowing ergometer data. If they choose 3 they will be prompted to input their exercise bike data. | Same as expected. | Pass |
+| Does the validate_user_workout_duration_input(time_data) function work? | The user may only input time data in hh:mm:ss format where hh < 24, mm < 60 and ss < 60. If these conditions are met they will be prompted to try again. | Same as expected. | Pass |
+| Does the validate_user_workout_distance_input(distance_data) function work? | Distance input in kilometres will only be accepted as two digits followed by a decimal point and two more digits. If these conditions are not met user will be prompted to try again. | Same as expected. | Pass |
+| Does the while loop within main() work? | After logging their first workout, a new user should be given the option to run the program again or exist the program. | Same as expected. | Pass |
+| Does the search_username(username) function work? | If a new user chooses a username that already exists, they will be prompted to try again and pick another. If an existing user correctly types a username that exists they will be prompted to input their password. If an existing user types a username that doesn't exist, they will be prompted to try again or choose a new username.| Same as expected. | Pass |
+| Does check_password(username, password) work? | This function should be able to find the corresponding usernames and passwords in the Unstoppable UT2 Username and Password Data spreadsheet. If so and the username and password match, existing_user_choice(username) will be called. If not, the user will be prompted to try and type their password again. | Same as expected. | Pass |
+| Does existing_user_choice(username) work? | When called this function should give the user the option to log a new workout (by calling user_workout_choice(username)), see all their past data for a particular workout type in a dataframe by calling display_all_previous_workout_entries(worksheet, username) or view their average scores for a particular workout type by calling calculate_average_workout_scores(worksheet, username). | Same as expected. | Pass |
+| Does display_all_previous_workout_entries(worksheet, username) work? | This should display all the user's past workout information from one of the given worksheets in a dataframe. | Same as expected. | Pass |
+| Does calling calculate_average_workout_scores(worksheet, username) work? | User should be able to view their average time and distance scores from their last three workouts of a specified type. If they have not yet logged three workouts, they will be alerted to this but given the average for their existing data anyway. If they have not logged any workouts of the specified type yet, they will be alerted to this too. | Same as expected. | Pass |
+| Does the while loop within main work the same way for an existing user as it does for a new user? | After completing their chosen action for the program, the user should be given the choice to run the program again or exit. | Same as expected. | Pass |
 
 ## Deployment
 
-***How I Deployed the Project***
-I visited my repository and pressed on the settings button. This brought me to a new page. On this new page there is a menu on the left hand side of the page. I clicked on the "Pages" option from this menu. Under "Source", I selected "main" as the branch from which to deploy the project from. I then clicked "Save" which automatically refreshed the page. After the few minutes required for Github to build the website, a link for the website appeared on this page.
+***How to Deploy the Project***
 
-***How to Run This Project From a Browser***
+Log into or register a new account at Heroku.
 
-1. Install Google Chrome or Mozilla Firefox.
-2. Install the Gitpod browser extension for your chosen browser.
-3. Create a GitHub account and log into it.
-4. Visit the repository for this project. It is called sonetto104/Peter-Regan-CI-PP2. You can also use this link to visit it: https://github.com/sonetto104/Peter-Regan-CI-PP2
-5. Open this repository in Gitpod by clicking the green Gitpod button at the top right of the repository.
-6. This will open a new workspace with the current state of the main branch of this repository.
+Click on the button New in the top right corner of the dashboard.
 
-***How to Run This Project Locally***
+From the drop-down menu then select Create new app.
 
-***Cloning the Repository***
-1. Visit the Interval Master repository: https://github.com/sonetto104/Peter-Regan-CI-PP2
-2. Click the "Code" dropdown box above the repository's file explorer and select the "Local" heading.
-3. Underneath this, click the HTTPS subheading if it's not already selected.
-4. Copy the link presented in the text field below this HTTPS subheading.
-5. Open your preferred IDE and make sure it has support for Git.
-6. Open the terminal, and create a directory where you can store the repository.
-7. Type git clone and paste the previously copied text and press enter.
-8. The repository will then be cloned to your selected directory.
+Enter your app name in the first field, the names must be unique so it's a good idea to check if your app name is available on Heroku before building the project.
 
-***Manually Downloading the Repository***
-1. Visit Interval Master GitHub repository: https://github.com/sonetto104/Peter-Regan-CI-PP2
-2. Click the "Code" dropdown box next to the green Gitpod icon.
-3. Click the "Download ZIP" option; this will download a copy of the selected branch's repository as a zip file.
-4. Find the downloaded file on your your computer, and extract the ZIP to the folder where you would like to store the repository.
+Select your region.
 
-After either cloning or downloading the repository, you can have offline access to it by navigating to the directory where it was stored in your IDE.
+Click on Create App.
+
+Once the app is created you will see the Overview panel of the application. 
+
+Click on Settings.
+
+Scroll down and click on Reveal Config Vars.
+
+For KEY field, type CREDS and for VALUE, copy and paste in the contents of the creds.json file from the directory. Press the Add button.
+For the next KEY field, type ENVFILE and copy and paste the contents of the envfile.env into the VALUE field. Press the Add button.
+For the last KEY field, type in 'PORT' and for the value field type in '8000'. Press the Add button.
+
+Scroll down to Buildpacks. Click the button Add buildpack and select 'python'. Do the same step and add 'node.js'. 
+Python must be listed first in build packs. If this is not the case they can be rearranged.
+
+Click on the the Deploy tab. From the deployment method, select 'Github' as the deployment.
+
+You will be asked to connect your github account. Confirm and proceed.
+
+Search for your repository name and connect.
+
+Once your Github account is connected, select how you want to push updates by clicking Enable Automatic Deploys. This means your app will automatically update every time you push your changes from Github.
 
 
 ## Acknowledgment of Code From Other Sources
 
-This is generally commented in the relevant files but here is a list of sources for code that came from elsewhere:
+This is generally commented in the run.py file but here is a list of sources for code that came from elsewhere:
 
-1. The HTML and CSS code related to the modals is heavily dependent on code from this source: https://www.freecodecamp.org/news/how-to-build-a-modal-with-javascript/
-2. A lot of the code that styles the h1, h2 and some of the p elements, as well as the quaver icon button comes from this source: https://codepen.io/mireille1306/pen/BawdXzY
-3. The CSS code that styles the submit button and the select elements comes from this source: https://www.w3schools.com/css/tryit.asp?filename=trycss_buttons_animate3
-4. The code for the event listener that monitors the user's selection from the select elements comes from this source: https://bobbyhadz.com/blog/javascript-select-onchange-get-value
-5. The code for the score incrementor was taken directly from the Code Institute Love Maths Walkthrough Project.
-6. The piano sounds came from a library belonging to the University of Iowa: https://theremin.music.uiowa.edu/MISpiano.html. I converted them from their original aiff. format.
+1. The code for the function at line 213 was taken from here: https://developers.google.com/drive/api/guides/search-files
+def search_file(username):
+2. The function at line 372 is heavily reliant on lines of code that were generated by ChatGPT.
+3. The format of the functions at lines 419 and 446 was taken directly from the Code Institute Love Sandwiches Walkthrough Project.
 
 ## Issues With This Project That Could Be Improved
 
-I suspect there are more efficient ways to write some of the code I have written in my script.js file due to some blocks being repeated, however, I am not yet fluent enough with Javascript to be able to figure out what they are right now. Given the time frame for this project, I feel it is more likely that I would confuse and introduce problems to code that already works by trying to edit it at this stage. However, in future it would be worth exploring how I could make the script.js file more economical and easier to read.
+Currently the user is able to input into the console even while it is printing messages or before some messages have been printed. This doesn't actually interfere with how the program works but could be confusing for a user and cause the data to appear in a way that is visually misleading if they accidentally jump ahead of the program. I have not changed this for the time being however due to the time limitations on this project.
+The username and password setup is very rudimentary. There is also no help offered to the user if they cannot remember their password. 
+Due to my handling of the username variable, it is also necessary to go right back to the start of the program each time the user would like to complete a difference action, rather than returning to a function at a specific point. This means that if the user wants to complete several actions, they do have to enter their username and password several times.
+Again, due to time constraints, these are issues I decided to leave in the project for now.
 
 ## Scope for Future Additions To Project
 
-1. This site could have varying difficulty levels. Giving the user the option to play the notes simultaneously would add a grade of difficulty. Offering the user three notes instead of a pair would require them to identify two intervals rather than one, again adding a grade of difficulty. These could also be played separately or simultaneously. This would involve the addition of further controls and Javascript in order to allow the user to choose the conditions of difficulty.
-2. A wider range of notes could be added. Currently this site tests intervals only within the range of one octave. Expanding the range by one octave more would allow the user to also test their recognition of compound intervals. This would also increase the frequency of some intervals which are currently underrepresented. Having only a one octave range limits the likely frequency of 7th and octave intervals.
-3. A leaderboard could be built and attached to the website, allowing users to record their scores by username.
-Though I was aware of these possibilities in building the project, I decided that they were slightly too ambitious for my current Javascript abilities. However, I would enjoy adding them in future.
+1. This app would benefit a lot from styling. As the purpose of this project is primarily about using Python and not visual styling, I haven't added this element yet due to time limitations. However, a tool like Textualise could be very useful in this context as suggested by my mentor Ronan McClelland.
+2. The username/password set up could be developed a lot. The current conditions for valid usernames and passwords are very basic and arbitrary. There is also nothing a user can do at this point if they cannot remember their password - if this is the case they must restart the programme and choose a new username and password.
+3. It would be useful to add a delete_last_entry() function. This could be used in case the user enters data mistakenly that is incorrect, even if it is valid by the program's standards.
+
