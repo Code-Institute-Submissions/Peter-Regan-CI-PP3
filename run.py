@@ -23,7 +23,6 @@ GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('UT2 Tracker Spreadsheet')
 USERNAME_PASSWORD_DATA_SHEET = GSPREAD_CLIENT.open('Unstoppable UT2 Username and Password Data')
 email_address = os.getenv("EMAIL_ADDRESS")
-# comment
 
 def new_user_or_existing_user():
     """
