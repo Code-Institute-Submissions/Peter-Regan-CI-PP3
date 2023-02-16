@@ -15,58 +15,45 @@ Unstoppable UT2 is very easy to use. All the user needs to do is remember a user
 For this project I used GitHub to both host my repository. Within the repository I used Code Institute's Python Essentials Template which set up the command line interface required for this project to work when deployed externally to Heroku. This left me free to focus on working with Python within GitHub's built in code editor. 
 I used Google's Drive API and the gspread library to write data to, read data from and perform operations on data from spreadsheets belonging to would-be users of Unstoppable UT2.
 
-##Logic Plan / Design for This Project
+## Logic Plan / Design for This Project
+
+Below you can see my rough plan for the flow of logic in this project. It is not fully detailed in that it doesn't include the data validation functions or all the possible applications of some functions to different worksheets, but I still did largely stick to this plan.
+
+![Logic Flowchart](https://github.com/sonetto104/Peter-Regan-CI-PP3/blob/main/utflowchart.jpeg)
+
 
 ## Project Features
-The features most important to this project are the random note pair generator, the interval number calculator, the event listeners that listen to the user's answer and the event listeners that tell the user whether they were correct or not and decide whether to generate a new note pair or not.
+The features most important to this project are the its functions and they inter-relate. 
 
-***Random Note Pair Generator***
-There are 13 audio tags with player controls, each containing a note sounding for approximately one second, in the HTML file. The range of these notes span one octave.
-The interval is generated from these audio tags according to these steps:
-1. The browser listens for all the DOM content to be loaded.
-2. A function randomly selects two notes from the audio tags (which have been converted into an array) and pushes them into an empty array called "randomNotesArray".
-3. There is an event listener on the large beamed quaver button in the middle of the page. When pressed, the second last and last items in the randomNotesArray are played one second apart.
+Here some of the functions are explained below. Bear in mind that I will not discuss every function, but highlight a few where the possibility of user error and/or external error has been considered:
 
-***Interval Number Calculator***
-I have decided to calculate the identity of each interval by counting how many semitones there are between the random note pair. This was achieved using the following logic:
-1. Each note was assigned an attribute called "data-number" which was assigned a number value.
-2. Corresponding to a chromatic scale beginning on C4, the number values begin with 0 and stop at 12. With every semitone ascension from C4, the "data-number" number value increases by 1. 
+def new_user_or_existing_user() -
 
-So: C4=0, Db4=1, D4=2, Eb4=3, E4=4 ....... C5=12
+This function welcomes the user to the program. It gives them an option to indicate whether they are a new user or an existing user.
+If the user selects the "new user" option, the search_username(username) function is then called to check if the new user's chosen username exists already. This prevents duplication. If the user's chosen username does not exist, they will be prompted to write a password. Both the type_username() and type_password() function have validation built into them which will be discussed later. Provided the username and password are valid, they will be entered and stored in an external spreadsheet so they can be accessed in future. At this point the search_file(username) function will be called. If this function does not find a spreadsheet in the drive where this project's data is stored containing the user's chosen username, it will call the create_new_worksheet(username) function, create a new workbook for the user and prompt them to log their first workout.
 
-3. The interval number is calculated as the difference between the data-number attribute values of the first note of the interval and the second note of the interval.
-4. If the interval number is negative, then an ascending interval was played. If it is positive, a descending interval was played. Thankfully whether the interval number is positive or negative does not change its quality.
+If the user indicates that they are an existing user, the function will still check if their username exists or not in the external spreadsheet containing usernames and passwords. This is in case they user has accidentally misspelled their username or mistakenly chose the existing user option. The user will be given the option of trying again or of creating a new username entirely. If the user provides a name which does exist in the spreadsheet, they will be prompted to write the corresponding password. Again, an incorrect password will prompt an oppotunity to try again or create a new username. If the username and password match, the search_file(username) function should be able to find their already existing spreadsheet and the user will be asked what functions of Unstoppable UT2 they would like to access.
 
-***Event Listeners***
-Event listeners are responsible for many of the behaviours of the Interval Master page.
+def type_new_password() and def type_username() -
 
-1. A DOM Content Loaded event listener is responsible for the appearance of a modal welcoming the user to Interval Master when they open the page.
-2. Subsequent event listeners attached to buttons within the series of welcome modals are responsible for the opening and closing of these modals in the correct order.
-3. Event listeners listen to the user's choice of interval quality and number so that the browser is always up to date with these choices and can accurately record them, no matter how many times the user may change their mind.
-4. An event listener is attached to the submit button and can decide whether to show a modal that tells the listener their answer was correct or incorrect. According to either case, the event listener can also decide whether to generate a new random interval or not.
+These functions performs largely as you would expect from their names. Note however the use of regular expressions to stipulate certain conditions about password and username validity. These conditions are of course arbitrary but I made them more as a means of showing consideration for making user data manageable.
 
-This is not an exhaustive list of every single event listener, but these are probably the most important examples.
+def search_file(username) -
 
-***Aria Labels***
-Consistent with standard guidelines, non-text elements in the HTML file have aria labels for visually impaired users where appropriate.
+I can't claim credit for this function as it has come from the Google Drive API documentation. However, it might be worth noting how I have been able to pass username which was a locally defined variable near the beginning of the script as an argument into this function and subsequently from this function as an argument into most of the other functions in the script. It also excepts an error in the case of the script not being able to interact with the Drive API in the expected way.
 
-## Project Feature Likely to be Noticed by User
 
-***Beamed Quaver Button for Generating Intervals***
-The most obvious feature of Interval Master is the large beamed quaver button. Even for non-musicians, this is an almost universally recognised symbol for music. Given that this is the only musical symbol on the page, and one of the largest features of the page despite having no text content, this signals to the user that this is where the interval or the "music" is going to come from.
+def display_all_previous_workout_entries(worksheet, username) -
 
-***Select Elements That Change Colour***
+Though perhaps not a particularly interesting function in itself, it was interesting at this level of learning at least to be able to use this opportunity to display data in a Pandas dataframe which allows the user's data to be displayed in a very easily digestible visual format, even if still only in a console rather than a fully styled webpage.
 
-![Screenshot of Select Elements](https://github.com/sonetto104/Peter-Regan-CI-PP2/blob/main/assets/images/select-inputs-screenshot.png)
+def validate_user_workout_duration_input(time_data) -
 
-The select elements change colour when the user hovers over them (as does the submit button). This is a visual affirmation for the user letting them know that their actions are making an impact on the site.
+Note here the use of regular expressions so that time data cannot be inputted into the spreadsheet in a way that cannot be parsed correctly into seconds by the script. Note also the use of try and except blocks to manage error handling. The same can be said of the validate_user_distance_input(distance_data) function too.
 
-***Score Incrementor***
+def main() -
 
-The score incrementor lets the user know how many intervals they have correctly identified in a row. I am attaching a general screenshot here where you can see the incrementor, quaver button and select elements all at once.
-
-![General screenshot](https://github.com/sonetto104/Peter-Regan-CI-PP2/blob/main/assets/images/project-features-screenshot.png)
-
+In main there is a while loop so that the user always has the option to run some other part of the program before closing it. This means the user could access several of the programs main functions in one sitting rather than having to refresh the page after each time they've completed an operation.
 
 ## Testing
 
