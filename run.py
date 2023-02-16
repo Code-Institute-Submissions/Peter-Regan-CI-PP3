@@ -429,8 +429,7 @@ def validate_user_workout_duration_input(time_data):
         match = time_format.fullmatch(time_data)
         if match is None:
             print(
-                f"Your workout time must be less than 24 hours. The value for minutes must be less than 60.
-                 The value for seconds must be less than 60. You entered {time_data}"
+                f"Your workout time must be less than 24 hours. The value for minutes must be less than 60.\nThe value for seconds must be less than 60. You entered {time_data}"
                 )
             raise ValueError(
                 f"Your workout time must be less than 24 hours.\n The value for minutes must be less than 60. The value for seconds must be less than 60.\n You entered {time_data}"
