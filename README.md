@@ -19,7 +19,7 @@ I used Google's Drive API and the gspread library to write data to, read data fr
 
 Below you can see my rough plan for the flow of logic in this project. It is not fully detailed in that it doesn't include the data validation functions or all the possible applications of some functions to different worksheets, but I still did largely stick to this plan.
 
-![Logic Flowchart](https://drive.google.com/file/d/1lZLYNeJ9SZiJ3miG6Gne_i8ZOmBKFm_7/view?usp=sharing)
+View flowchart here: https://drive.google.com/file/d/1lZLYNeJ9SZiJ3miG6Gne_i8ZOmBKFm_7/view?usp=sharing
 
 
 ## Project Features
