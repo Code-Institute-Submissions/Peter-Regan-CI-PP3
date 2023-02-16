@@ -386,16 +386,19 @@ def calculate_average_workout_scores(worksheet, username):
         avg_seconds = sum(seconds) / len(seconds)
         # Convert average seconds back to hh:mm:ss format
         avg_time = str(datetime.timedelta(seconds=avg_seconds))
-        print(f"Your average workout duration for your last three {worksheet} workouts is {avg_time}.")
+        print(f"Your average workout duration for your last three {worksheet}")
+        print(f"workouts is {avg_time}.")
     elif len(duration_column_entries) < 4 and len(duration_column_entries) > 1:
-        print(f"You haven't logged three {worksheet} workouts yet, but here's your existing data anyway!")
+        print(f"You haven't logged three {worksheet} workouts yet,")
+        print(f"but here's your existing data anyway!")
         # Convert time values to seconds
         seconds = [datetime.datetime.strptime(t, '%H:%M:%S').time().second + datetime.datetime.strptime(t, '%H:%M:%S').time().minute * 60 + datetime.datetime.strptime(t, '%H:%M:%S').time().hour * 3600 for t in duration_column_entries[1:]]
         # Calculate average of seconds
         avg_seconds = sum(seconds) / len(seconds)
         # Convert average seconds back to hh:mm:ss format
         avg_time = str(datetime.timedelta(seconds=avg_seconds))
-        print(f"Your average workout duration for your {worksheet} workouts is {avg_time}.")
+        print(f"Your average workout duration for your {worksheet}")
+        print(f"workouts is {avg_time}.")
     elif len(duration_column_entries) <= 1:
         print(f"You haven't logged any {worksheet} workouts yet.")
 
@@ -404,11 +407,13 @@ def calculate_average_workout_scores(worksheet, username):
         distance_column_last_three_entries = distance_column_entries[-3:]
         distance_column_last_three_entries = [float(entry) for entry in distance_column_entries[1:]]
         avg_distance = sum(distance_column_last_three_entries) / len(distance_column_last_three_entries)
-        print(f"Your average distance covered in km for your last three {worksheet} workouts is {avg_distance}.")
+        print(f"Your average distance covered in km for your last three")
+        print(f"{worksheet} workouts is {avg_distance}.")
     elif len(distance_column_entries) < 4 and len(distance_column_entries) > 1:
         distance_column_entries = [float(entry) for entry in distance_column_entries[1:]]
         avg_distance = sum(distance_column_entries) / len(distance_column_entries)
-        print(f"Your average distance covered in km for your last three {worksheet} workouts is {avg_distance}.")
+        print(f"Your average distance covered in km for your last three")
+        print(f"{worksheet} workouts is {avg_distance}.")
     elif len(distance_column_entries) <= 1:
         pass
 
