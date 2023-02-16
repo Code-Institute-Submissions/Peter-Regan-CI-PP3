@@ -57,33 +57,22 @@ In main there is a while loop so that the user always has the option to run some
 
 ## Testing
 
-***HTML, CSS and Javascript Testing***
-I tested the index.html file and style.css file with the W3C HTML and CSS validators. I tested the script.js file with Beautify Tools (https://beautifytools.com/javascript-validator.php). All files passed tests without errors.
-
-![Validation for HTML file](https://github.com/sonetto104/Peter-Regan-CI-PP2/blob/main/assets/images/interval-master-second-html-validation.png)
-
-![Validation for CSS file](https://github.com/sonetto104/Peter-Regan-CI-PP2/blob/main/assets/images/interval-master-css-validation.png)
-
-![Validation for JS file](https://github.com/sonetto104/Peter-Regan-CI-PP2/blob/main/assets/images/interval-master-js-validation.png)
-
-***Lighthouse Report***
-
-Interval Master also scores well on a lighthouse report.
-
-![Lighthouse report for Interval Master](https://github.com/sonetto104/Peter-Regan-CI-PP2/blob/main/assets/images/interval-master-lighthouse-report.png)
+***PEP8 Validation***
+The run.py file for this project passes through the pycodestyle linter with no major issues.
+Some small issues include some of the lines being too long or some extensions not being synced, however these are not required for the project to work.
 
 ***Manual Testing***
 
 | Test        | Expected Outcome | Actual Outcome | Pass/Fail |
 | ----------- | ---------------- | -------------- | --------- | 
-| Is the site readable with correct content?    | Site should have three welcome modals without spelling errors, heading, clearly legible select elements containing intervals with qualities major, minor, perfect, augmented and diminished, and number ranging from unison to octave.       | Same as expected. | Pass |
-| Is the site responsive to varying screen sizes?  | Site should be legible with clear flow with screen widths as small as 150px.      | Same as expected  ![Screenshot 1](https://github.com/sonetto104/Peter-Regan-CI-PP2/blob/main/assets/images/interval-master-screen-size-screenshot1.png) ![Screenshot 2](https://github.com/sonetto104/Peter-Regan-CI-PP2/blob/main/assets/images/interval-master-screen-size-screenshot2.png) ![Screenshot 3](https://github.com/sonetto104/Peter-Regan-CI-PP2/blob/main/assets/images/interval-master-screen-size-screenshot3.png) ![Screenshot 4](https://github.com/sonetto104/Peter-Regan-CI-PP2/blob/main/assets/images/interval-master-screen-size-screenshot4.png) ![Screenshot 5](https://github.com/sonetto104/Peter-Regan-CI-PP2/blob/main/assets/images/interval-master-screen-size-screenshot5.png) ![Screenshot from mobile](https://github.com/sonetto104/Peter-Regan-CI-PP2/blob/main/assets/images/interval-master-mobile-screenshot.jpg) | Pass |
-| Do three welcome modals appear in correct order when site loads? | Welcome modal should appear when user visits site. Second instruction modal appears after clicking "next". 3rd instruction modal appears after clicking "next" | Same as expected. | Pass |
-| Do all "close modal" buttons work on all three welcome modals? | All modals should close after clicking "X" button. | Same as expected. | Pass |
-| Does quaver icon button play an interval? | Two notes should sound after pressing quaver icon button | Same as expected. | Pass |
-| Does quaver icon button repeat same interval if "submit" has not been pressed? | If user has not pressed "submit" and they press the quaver button again, they should be able to repeatedly hear the same interval. | Same as expected. | Pass |
-| Does the "correct answer" modal appear if user submits correct answer? | If user correctly identifies interval and presses submit, a modal should appear letting them know they are correct and prompt them to generate the next interval. | Same as expected. | Pass |
-| Does a new interval play after the submission of a correctly identified interval? | If user submits answer that is correct, the next interval they play should be a different randomly generated interval. | Same as expected. | Pass |
+| Does the program open by prompting the user to indicate whether they are a new user or existing user?    | Program should open with a welcome message and prompt user to indicate if they are new or existing user with an input. | Same as expected. | Pass |
+| Will the program accept a username of less than 5 characters? | If username is less than 5 characters, user will receive message stating correct username format and be prompted to try again. | Same as expected. | Pass |
+| Will program accept a username with any uppercase letters, numbers or symbols? |If username is contains uppercase letters, numbers or symbols, user will receive message stating correct username format and be prompted to try again.  | Same as expected. | Pass |
+| Will program  accept a password of less than 5 characters? | If password is less than 5 characters, user will receive message stating correct password format and be prompted to try again.  | Same as expected. | Pass |
+| Will program accept a username with any uppercase letters, numbers or symbols? | If password contains uppercase letters, numbers or symbols, user will receive message stating correct password format and be prompted to try again. | Same as expected. | Pass |
+| Does write_username_and_password_to_data_sheet(username, password) work? | This should take username and password data from username and write it to "Unstoppable UT2 Username and Password Data" spreadsheet in my Google Drive. | Same as expected. | Pass |
+| Does search_file(username) function call create_new_user_workbook(username) function for a new user? | If this username doesn't already exist on a spreadsheet in the google drive, create_new_user_workbook(username) should be called to create one. | Same as expected. | Pass |
+|  er submits answer that is correct, the next interval they play should be a different randomly generated interval. | Same as expected. | Pass |
 | Does "wrong answer" modal appear if user submits wrong answer? | If the user incorrectly identifies interval and presses submit, a modal should appear letting them know they are incorrect and prompt them to try again. | Same as expected. | Pass |
 | Is the same interval still played after the submission of an incorrect answer? | If the user incorrectly identifies an interval and presses submit, the next interval they play should be the same as what they heard before. | Same as expected. | Pass |
 | Does score incrementor increment the score by 1 each time user indentifies correct interval? | Score should increase by 1 after each correct interval submission. | Same as expected. | Pass |
@@ -91,11 +80,6 @@ Interval Master also scores well on a lighthouse report.
 | Is each interval number matched to correct interval description? | Interval number for perfect unison = 0 <br><br> Interval number for minor 2nd = 1 or -1 <br><br> Interval number for major 2nd = 2 or -2 <br><br> Interval number for minor 3rd = 3 or -3 <br><br> Interval number for major 3rd = 4 or -4 <br><br> Interval number for perfect 4th = 5 or -5 <br><br> Interval number for augmented 4th = 6 or -6 <br><br> Interval number for diminished 5th = 6 or -6 <br><br> Interval number for perfect 5th = 7 or -7 <br><br> Interval number for minor 6th = 8 or -8 <br><br> Interval number for major 6th = 9 or -9 <br><br> Interval number minor 7th = 10 or -10 <br><br> Interval number for major 7th = 11 or -11 <br><br> Interval number for perfect octave = 12 or -12 <br><br> This will mean that the user will always be alerted that they are correct as long as they have selected the correct interval i.e. the interval descriptions assigned to each interval number are actually correct. | Same as expected. | Pass |
 | Is Interval Master compatible with browsers other than Chrome? E.g. Microsoft Edge, Mozilla Firefox, Samsung Internet Browser | Site should appear the same on a variety of browsers. | Same as expected. | Pass |
 
-***Special Note Regarding Perfect Unison:*** When a perfect unison is played, only one note sounds as there is no note difference in a unison interval.
-
-***Preview of Responsive Site According to https://ui.dev/amiresponsive***
-
-![Screenshot of site at different screen sizes](https://github.com/sonetto104/Peter-Regan-CI-PP2/blob/main/assets/images/responsive-preview-screenshot.png)
 
 ## Deployment
 
