@@ -15,23 +15,7 @@ Unstoppable UT2 is very easy to use. All the user needs to do is remember a user
 For this project I used GitHub to both host my repository. Within the repository I used Code Institute's Python Essentials Template which set up the command line interface required for this project to work when deployed externally to Heroku. This left me free to focus on working with Python within GitHub's built in code editor. 
 I used Google's Drive API and the gspread library to write data to, read data from and perform operations on data from spreadsheets belonging to would-be users of Unstoppable UT2.
 
-## Design
-
-***Layout and General Structure***
-I used this simple hand drawn wireframe to create the general layout of the website.
-![Interval Master Wireframe](https://github.com/sonetto104/Peter-Regan-CI-PP2/blob/main/assets/images/interval-master-layout.jpg)
-You may notice that there are fewer buttons in the finished website than I had initally planned for in my wireframe. This is because I had originally imagined additional features that I then decided were too ambitious for the scope and timescale of this project. However, otherwise this wireframe proved to be helpful and I largely stuck to it.
-
-***Colour Scheme***
-For Interval Master I used bright colours. The background has a gradient effect using blue and pink. Text elements are white and have a red and orange text-shadow effect that makes them more dynamic looking and also makes the brightly coloured text more easy to read and differentiate from the colourful background. Buttons and select elements are also red but change to a very contrasting bright green when the user hovers over them. This is to allow the user to easily identify what choice they are making. As this website does not serve a particularly serious purpose, I chose these bright colours to create an atmosphere of fun so the user is encouraged to think of Interval Master as a game rather than as a dry music theory exercise.
-
-![Screenshot of Page](https://github.com/sonetto104/Peter-Regan-CI-PP2/blob/main/assets/images/interval-master-page-screenshot.png)
-
-***Fonts***
-The font I used for Interval Master is "Righteous" which I took from Google Fonts. As there are so few text elements in this webpage, I decided not to choose a different font family for heading and non-heading elements, but just used differing font weights and sizes. I chose this font as it is strong and easily legible, but it is also quite rounded which helps contribute to the atmosphere of fun I referred to above in the Colour Scheme section. I used a skew effect on the Interval Master heading, again to suggest the idea of something dynamic and fun rather than static and boring.
-
-***Modals***
-I used modals rather than browser alerts to give the user feedback and introduce them to the website as they are nicer to look at and keep the user's attention focused within the website rather than on the idea of their browser as a vehicle that could take them elsewhere. It also makes communication from the page to the user visually consistent with the rest of the site. Purely for the purposes of legibility, I made the modals black and white. Having tried to use some of the colours already in use in the website, I decided they were too distracting given how many bright colours there are already present in the page, and this made the modals difficult to read.
+##Logic Plan / Design for This Project
 
 ## Project Features
 The features most important to this project are the random note pair generator, the interval number calculator, the event listeners that listen to the user's answer and the event listeners that tell the user whether they were correct or not and decide whether to generate a new note pair or not.
