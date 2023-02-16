@@ -401,11 +401,11 @@ def calculate_average_workout_scores(worksheet, username):
         distance_column_last_three_entries = distance_column_entries[-3:]
         distance_column_last_three_entries = [float(entry) for entry in distance_column_entries[1:]]
         avg_distance = sum(distance_column_last_three_entries) / len(distance_column_last_three_entries)
-        print(f"Your average distance covered for your last three {worksheet} workouts is {avg_distance}.")
+        print(f"Your average distance covered in km for your last three {worksheet} workouts is {avg_distance}.")
     elif len(distance_column_entries) < 4 and len(distance_column_entries) > 1:
         distance_column_entries = [float(entry) for entry in distance_column_entries[1:]]
         avg_distance = sum(distance_column_entries) / len(distance_column_entries)
-        print(f"Your average distance covered for your last three {worksheet} workouts is {avg_distance}.")
+        print(f"Your average distance covered in km for your last three {worksheet} workouts is {avg_distance}.")
     elif len(distance_column_entries) <= 1:
         pass
 
@@ -437,6 +437,8 @@ def validate_user_workout_duration_input(time_data):
         return False
 
 
+# The try/except format for this code block was taken from
+# Code Institue's Love Sandwiches Walkthrough Project.
 def validate_user_workout_distance_input(distance_data):
     """
     This will ensure that the user may only
@@ -451,7 +453,7 @@ def validate_user_workout_distance_input(distance_data):
             match = distance_format.fullmatch(distance_data_str)
             if match is None:
                 raise ValueError(
-                    f"Your distance should be entered in this format - 00.00. You entered {distance_data}"
+                    f"Your distance in kilometres should be entered in this format - 00.00. You entered {distance_data}"
                     )
             break
         except ValueError as e:
