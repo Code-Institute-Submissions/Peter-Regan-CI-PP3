@@ -137,7 +137,8 @@ def type_new_password():
     """
     print("Please type your password below.\n")
     print("It must contain a minimum of five characters.\n")
-    print("It must contain only lowercase letters, no spaces, no numbers and no special characters or symbols.\n")
+    print("It must contain only lowercase letters, no spaces, no numbers and no special")
+    print("characters or symbols.\n")
     while True:
         password = input("Please type your password here: ")
         if len(password) < 5:
@@ -155,7 +156,8 @@ def type_username():
     """
     print("Please type your username below.\n")
     print("It must contain a minimum of five characters.\n")
-    print("It must contain only lowercase letters, no spaces, no numbers and no special characters or symbols.\n")
+    print("It must contain only lowercase letters, no spaces, no numbers and no special")
+    print("characters or symbols.\n")
     while True:
         username = input("Please type your username here: ")
         if len(username) < 5:
@@ -427,10 +429,11 @@ def validate_user_workout_duration_input(time_data):
         match = time_format.fullmatch(time_data)
         if match is None:
             print(
-                f"Your workout time must be less than 24 hours. The value for minutes must be less than 60. The value for seconds must be less than 60. You entered {time_data}"
+                f"Your workout time must be less than 24 hours. The value for minutes must be less than 60.
+                 The value for seconds must be less than 60. You entered {time_data}"
                 )
             raise ValueError(
-                f"Your workout time must be less than 24 hours. The value for minutes must be less than 60. The value for seconds must be less than 60. You entered {time_data}"
+                f"Your workout time must be less than 24 hours.\n The value for minutes must be less than 60. The value for seconds must be less than 60.\n You entered {time_data}"
                 )
         else:
             return True
@@ -455,7 +458,7 @@ def validate_user_workout_distance_input(distance_data):
             match = distance_format.fullmatch(distance_data_str)
             if match is None:
                 raise ValueError(
-                    f"Your distance in kilometres should be entered in this format - 00.00. You entered {distance_data}"
+                    f"Your distance in kilometres should be entered in this format - 00.00.\n You entered {distance_data}"
                     )
             break
         except ValueError as e:
@@ -475,7 +478,9 @@ def input_workout_duration_info():
         print("Your time should be entered in this format - 00:00:00\n")
         print("E.g. if your workout was an hour and twenty minutes long, ")
         print("you would enter 01:20:00.\n")
-        print("Your value for hours must be less than 24. Your value for minutes must be less than 60. Your value for seconds must be less than 60.\n")
+        print("Your value for hours must be less than 24.") 
+        print("Your value for minutes must be less than 60.") 
+        print("Your value for seconds must be less than 60.\n")
         time_data = input("Please input your workout duration here: ")
         if time_data:
             break
