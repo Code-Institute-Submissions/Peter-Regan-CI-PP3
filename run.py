@@ -1,5 +1,5 @@
 from __future__ import print_function
-import gspread 
+import gspread
 import os
 import re
 import datetime
@@ -34,7 +34,6 @@ def new_user_or_existing_user():
     print("In case you're unfamiliar with the term 'UT2', it refers to an aerobic workout at an intensity which can be held for the full workout duration.\n")
     print("You should be comfortable enough to speak and be operating at 65-75% maximimum heart rate.\n")
     print("The workout should last approximately 60 minutes.\n")
-    
     existing_or_new_choice = None
 
     while existing_or_new_choice not in ['1', '2']:
@@ -71,7 +70,7 @@ def new_user_or_existing_user():
                 if response == "1":
                     new_user_or_existing_user()
 
-           
+         
 def existing_user():
     """
     This function is called if the user is an existing user.
@@ -106,7 +105,7 @@ def check_password(username, password):
 
 
 def write_username_and_password_to_data_sheet(username, password):
-    """ 
+    """
     This will add the user's username and password
     to the username and password spreadsheet.
     """
@@ -131,7 +130,7 @@ def search_username(username):
 
 
 def type_new_password():
-    """ 
+    """
     This is where the user will type their password.
     """
     print("Please type your password below.\n")
@@ -204,8 +203,8 @@ def create_new_user_workbook(username):
         print("Email address not found in the environment variables.")
 
 
-# This code block was taken almost directly from 
-# the documentation for Google's Drive API. 
+# This code block was taken almost directly from
+# the documentation for Google's Drive API.
 # You can find it here: https://developers.google.com/drive/api/guides/search-files
 def search_file(username):
     """Search file in drive location
@@ -238,8 +237,7 @@ def search_file(username):
                 create_new_user_workbook(username)
                 user_workout_choice(username)
             if page_token is None:
-                break
-            
+                break       
     except HttpError as error:
         print(F'An error occurred: {error}')
         files = None
@@ -317,7 +315,6 @@ def existing_user_choice(username):
     if user_choice == 1:
         print("You've chosen to log a new workout.\n")
         user_workout_choice(username)
-
     if user_choice == 2:
         print("You've chosen to view the data from your previous workouts.\n")
         print("Type 1 to view your treadmill workout data.\nType 2 to view your rowing ergometer data.\nType 3 to view your exercise bike data.")
